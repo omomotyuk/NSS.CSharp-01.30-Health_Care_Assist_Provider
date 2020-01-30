@@ -12,69 +12,54 @@
 	The application creates a connection between people who cannot afford health insurance and healthcare providers like doctors and physicians.  In addition, philanthropists can donate money to help with external costs associated with treatments.
 
 
-## Full Proposal:
-
-
 ## Stack: MVC 
 
 
 ## App Summary
 
-
-## Overview of app: 
-
-
 ## MVP Definition: 
 * User-specific CRUD for tree type of users: Patient, Doctor and Sponsor
-* User-specific list view of reported issues
-* Ability to make and edit comment for for each reported issue
-* Display location of reported issue on online map
-* Other crap for different user access levels
-
-
-## Dream Stretch Goals:
-
-
-## Things you want your mentor to check in on:
+* User-specific lists of the Patients, Doctors and Sponsors
+* Ability for a Patient to create Diagnosis request
+* Ability to schedule an Appointment when appropriate date-time and aids funds are available
+* Ability for a Patient to rate an Appointment and comment it
+* Ability for a Doctor to provide information on Date, Time and Price af Appointments
+* Ability for a Doctor to schedule an Appointment for particular Patient with no charge for it
+* Ability for a Sponsor to indicate sum of money she can give for aid
+* Ability for a Sponsor to indicate a Patient whom she provides assist.
 
 
 ## User Stories 
-(can be integrated into MVP definition):
-(Given… when…. then…)
 
+ 1. Given a Patient wants to view list of available Appointments for specific Speciality
+When the Patient clicks on the Doctors item in the navigation bar
+Then all Doctors of specific Speciality with available Appointments should be listed with the following information:
+ - First name and last name
+ - Speciality
+ - Doctors rating
+ - Date and Time, available to schedule appointment
 
-Given a Patient wants to view list of available Appointments for specific Speciality
- 
-When the employee clicks on the Employees item in the navigation bar
-Then all current employees should be listed with the following information
+ 2. Given a Patient wants to view detailed information on particular Doctor
+When the Patient clicks on the Doctors name from the list, presented in Doctors section
+Then the Detailed information about Doctors should be presented.
 
-First name and last name
-Department
+ 3. Given a Patient wants to check a sum of available aids provided from Sponsor
+When the Patient clicks on the Sponsor item in the navigation bar
+Then the list of all Sponsors with available aids money at the moment should be presented with the information:
+ - First name and last name
+ - Sum of money for aids available at the moment
 
-
-
-
-* As an app user, in order to report observed issue, I want to do it easy way
-* As an app user, I want to keep track of my reports
-* As an app user, in order to visualize my reports, I want to be able to view issue location marks on a map
-* As an app user, in order to comment, edit comment, or remove reports that already been handled from active list,* I want to click on issue panel with image, and then the create/edit comment button. From there I can enter comment text and save it. I want to be able to close issue panel without making any changes
-
-
-## Planning Links (Start on it before one-on-one but doesn’t have to be fully fleshed out)
-
-
-## Link to Repo Issues: 
-
-
-## Mock-up/Wireframes: 
+ 4. Given a Patient wants to schedule an appointment
+When the Patient clicks on the Appointment item in the navigation bar
+Then the following information should be presented:
+ - the Patients own First name and last name
+ - Speciality needed based on Diagnosis provided
+ - List of Doctors to choose from (drop-down select menu?)
+ - List of available Date and Time to schedule appointment (drop-down select menu?)
+ - List of Sponsors, who provide enough money to pay for appointment (drop-down select menu?)
+And then clicks on the Submit button
+ Then the DiagnosesAppointment item should be created
 
 
 ## ERD:
 ![Initial ERD](/CSharpCapstoneERD.png)
-
-
-## Research Planning Links or Documents (Start on it before one-on-one but doesn’t have to be fully fleshed out)
-
-
-## Research for any external tools/technology you plan on using (i.e. external API’S): 
-## External APIs or Libraries: 
