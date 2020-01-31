@@ -32,8 +32,8 @@
 ## User Stories
 
 1. User should be able to create an account
-When the user clicks on the Register link
-Then the following input fields should be presented:
+ When the user clicks on the Register link
+ Then the following input fields should be presented:
 - List of types of the User account to choose from (drop-down select menu?)
 - the e-mail address
 - the password and password confirmation
