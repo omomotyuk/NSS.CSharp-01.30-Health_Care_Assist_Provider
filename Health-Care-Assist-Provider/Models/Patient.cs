@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Health_Care_Assist_Provider.Models
 {
-    public class Patient: ApplicationUser
+    public class Patient
     {
-        [Key]
         public int PatientId { get; set; }
 
         [Required]
