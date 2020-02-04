@@ -21,10 +21,6 @@ namespace Health_Care_Assist_Provider.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        //[Required]
-        //[Display(Name = "e-Mail address")]
-        //public string Email { get; set; }
-
         [Required]
         [Display(Name = "Street Address")]
         public string StreetAddress { get; set; }
