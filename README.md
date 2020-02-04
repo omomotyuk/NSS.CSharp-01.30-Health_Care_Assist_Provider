@@ -32,8 +32,8 @@
 ## User Stories
 
 1. User should be able to create an account
- When the user clicks on the Register link
- Then the following input fields should be presented:
+When the user clicks on the Register link
+Then the following input fields should be presented:
 - List of types of the User account to choose from (drop-down select menu?)
 - the e-mail address
 - the password and password confirmation
@@ -112,6 +112,10 @@ Then the following information should be presented:
 - List of available Date and Time to schedule an appointment (drop-down select menu)
 - And then clicks on the Submit button
 Then the DiagnosesAppointment item should be created
+
+11. Given a Patient wants to add a comment for appointment
+When the Patient clicks on the Appointment item in the navigation bar
+Then the list of Appointments should be presented with the Add comment button.
 
 
 ## ERD:
