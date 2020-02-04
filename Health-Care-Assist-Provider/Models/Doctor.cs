@@ -8,7 +8,6 @@ namespace Health_Care_Assist_Provider.Models
 {
     public class Doctor
     {
-        [Key]
         public int DoctorId { get; set; }
 
         [Required]

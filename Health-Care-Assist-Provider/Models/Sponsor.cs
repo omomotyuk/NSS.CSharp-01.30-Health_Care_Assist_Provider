@@ -8,7 +8,6 @@ namespace Health_Care_Assist_Provider.Models
 {
     public class Sponsor
     {
-        [Key]
         public int SponsorId { get; set; }
 
         [Required]
