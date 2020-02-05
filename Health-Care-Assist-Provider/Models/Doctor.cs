@@ -12,6 +12,7 @@ namespace Health_Care_Assist_Provider.Models
 
         [Required]
         public string PersonId { get; set; }
+        public ApplicationUser Person { get; set; }
 
         [Required(ErrorMessage = "Doctors Specialty is required")]
         [Display(Name = "Specialty")]
