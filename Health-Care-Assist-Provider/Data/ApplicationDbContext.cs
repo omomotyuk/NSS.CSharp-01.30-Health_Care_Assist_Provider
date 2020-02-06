@@ -129,5 +129,11 @@ namespace Health_Care_Assist_Provider.Data
             };
             modelBuilder.Entity<Sponsor>().HasData(sUser);
         }
+        //public DbSet<Product> Product { get; set; }
+
+        public DbSet<Health_Care_Assist_Provider.Models.Patient> Patient { get; set; }
+        //public DbSet<Product> Product { get; set; }
+
+        public DbSet<Health_Care_Assist_Provider.Models.Doctor> Doctor { get; set; }
     }
 }
