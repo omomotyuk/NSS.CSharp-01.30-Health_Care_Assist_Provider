@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Health_Care_Assist_Provider.Models.Sponsor>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Person)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CurrentDonation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalDonation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalAssists)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Person.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrentDonation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalDonation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalAssists)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.SponsorId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.SponsorId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.SponsorId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

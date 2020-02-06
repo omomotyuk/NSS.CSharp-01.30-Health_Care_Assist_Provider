@@ -135,5 +135,8 @@ namespace Health_Care_Assist_Provider.Data
         //public DbSet<Product> Product { get; set; }
 
         public DbSet<Health_Care_Assist_Provider.Models.Doctor> Doctor { get; set; }
+        //public DbSet<Product> Product { get; set; }
+
+        public DbSet<Health_Care_Assist_Provider.Models.Sponsor> Sponsor { get; set; }
     }
 }
