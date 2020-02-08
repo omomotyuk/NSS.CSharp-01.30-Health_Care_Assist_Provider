@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Health_Care_Assist_Provider.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200204203055_New-User-Tables-Seeding")]
-    partial class NewUserTablesSeeding
+    [Migration("20200208234749_Added-Models")]
+    partial class AddedModels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.1")
+                .HasAnnotation("ProductVersion", "3.1.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -105,7 +105,7 @@ namespace Health_Care_Assist_Provider.Migrations
                         {
                             Id = "00000000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5f50dea2-52cd-4f00-858c-c60716fc0583",
+                            ConcurrencyStamp = "da7db3f3-6d13-4a2d-939f-57c61e6be1ea",
                             Email = "first.admin@hcap.org",
                             EmailConfirmed = true,
                             FirstName = "First",
@@ -113,7 +113,7 @@ namespace Health_Care_Assist_Provider.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "FIRST.ADMIN@HCAP.ORG",
                             NormalizedUserName = "FIRST.ADMIN@HCAP.ORG",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJ4mT1Xs3QtMNXg7hPkv7ziOQpETk3GnJhMCDPXb47504jbSrt0Tb4/41QZY2ah5Cw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMQdK204M1mBISzF+4Mh5LFqTw6XuB0Imo5/xKraij49v4NWHZnMEc2/s0fuNvxFBg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             StreetAddress = "123 Infinity Way",
@@ -125,7 +125,7 @@ namespace Health_Care_Assist_Provider.Migrations
                         {
                             Id = "11100000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6874cd21-24a9-4517-ab85-48b6d1994be9",
+                            ConcurrencyStamp = "0e6aa792-842b-4d0e-8542-5037192c5afe",
                             Email = "p.patientson@home.net",
                             EmailConfirmed = true,
                             FirstName = "Patient",
@@ -133,7 +133,7 @@ namespace Health_Care_Assist_Provider.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "P.PATIENTSON@HOME.NET",
                             NormalizedUserName = "P.PATIENTSON@HOME.NET",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKZGnzkK0f1VAh3l64SwdsNSVq0dsrh6GBznAEUqsn97w77b6tIBpOASrI9IL5OKYA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJ8/KlQr0Y8+PcSdrLLDJLdQLaJu5L7tiDHPXYlPluQ/cMx8ly8Db4fdnNvJoJjdfQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794001",
                             StreetAddress = "001 Patient Addr",
@@ -145,7 +145,7 @@ namespace Health_Care_Assist_Provider.Migrations
                         {
                             Id = "22200000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "41298dbb-41b6-4c93-99bf-14e6ac882978",
+                            ConcurrencyStamp = "a2964166-7c85-4467-9621-0dc2d970f96d",
                             Email = "d.doctorson@work.com",
                             EmailConfirmed = true,
                             FirstName = "Doctor",
@@ -153,7 +153,7 @@ namespace Health_Care_Assist_Provider.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "D.DOCTORSON@WORK.COM",
                             NormalizedUserName = "D.DOCTORSON@WORK.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENYbR833jY7NpQI0WrSJjg+LxTVMdyuQ4KNRYf/rKiYDpWKOGbv2wtothGL0p1KUIQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOh+Mk6RRt203e5TQuz26msCe2wY/gWAMgABo83yZaCQSMdeP3uQdBA0cu4FWBeObw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794002",
                             StreetAddress = "002 Doctor Addr",
@@ -165,7 +165,7 @@ namespace Health_Care_Assist_Provider.Migrations
                         {
                             Id = "33300000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "91848e1b-81ce-4f8c-a1aa-9b597cd6b5e7",
+                            ConcurrencyStamp = "1fe92a91-c2a2-4da9-a7d3-690569fe82bf",
                             Email = "s.sponsorson@fund.net",
                             EmailConfirmed = true,
                             FirstName = "Sponsor",
@@ -173,7 +173,7 @@ namespace Health_Care_Assist_Provider.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "S.SPONSORSON@FUND.ORG",
                             NormalizedUserName = "S.SPONSORSON@FUND.ORG",
-                            PasswordHash = "AQAAAAEAACcQAAAAEC5yncyG3aEmSVmtWcY0kRpqtWJ4iv2runLxcHnWo57KolmODfnVPhjiTbZHf+pu0g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHnE5T3s/jLW21i2o6biF4HHk0DQcdqG24AX80vVG97p1rUmhQBDZYD9p1J+g176Lg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794003",
                             StreetAddress = "003 Sponsor Addr",
@@ -181,6 +181,104 @@ namespace Health_Care_Assist_Provider.Migrations
                             UserName = "s.sponsorson@fund.org",
                             UserType = 3
                         });
+                });
+
+            modelBuilder.Entity("Health_Care_Assist_Provider.Models.Appointment", b =>
+                {
+                    b.Property<int>("AppointmentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Available")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("DateAndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Price")
+                        .HasColumnType("real");
+
+                    b.HasKey("AppointmentId");
+
+                    b.HasIndex("DoctorId");
+
+                    b.ToTable("Appointment");
+                });
+
+            modelBuilder.Entity("Health_Care_Assist_Provider.Models.Assist", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("AppointmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DiagnosisId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Rating")
+                        .HasColumnType("real");
+
+                    b.Property<int?>("SponsorId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppointmentId");
+
+                    b.HasIndex("DiagnosisId");
+
+                    b.HasIndex("SponsorId");
+
+                    b.ToTable("Assist");
+                });
+
+            modelBuilder.Entity("Health_Care_Assist_Provider.Models.Diagnosis", b =>
+                {
+                    b.Property<int>("DiagnosisId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<int?>("PatientId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Specialty")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.HasKey("DiagnosisId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("Diagnosis");
                 });
 
             modelBuilder.Entity("Health_Care_Assist_Provider.Models.Doctor", b =>
@@ -195,8 +293,7 @@ namespace Health_Care_Assist_Provider.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PersonId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<float>("Rating")
                         .HasColumnType("real");
@@ -206,6 +303,8 @@ namespace Health_Care_Assist_Provider.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("DoctorId");
+
+                    b.HasIndex("PersonId");
 
                     b.ToTable("Doctor");
 
@@ -231,10 +330,11 @@ namespace Health_Care_Assist_Provider.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PersonId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("PatientId");
+
+                    b.HasIndex("PersonId");
 
                     b.ToTable("Patient");
 
@@ -258,8 +358,7 @@ namespace Health_Care_Assist_Provider.Migrations
                         .HasColumnType("real");
 
                     b.Property<string>("PersonId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("TotalAssists")
                         .HasColumnType("int");
@@ -268,6 +367,8 @@ namespace Health_Care_Assist_Provider.Migrations
                         .HasColumnType("real");
 
                     b.HasKey("SponsorId");
+
+                    b.HasIndex("PersonId");
 
                     b.ToTable("Sponsor");
 
@@ -415,6 +516,56 @@ namespace Health_Care_Assist_Provider.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Health_Care_Assist_Provider.Models.Appointment", b =>
+                {
+                    b.HasOne("Health_Care_Assist_Provider.Models.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId");
+                });
+
+            modelBuilder.Entity("Health_Care_Assist_Provider.Models.Assist", b =>
+                {
+                    b.HasOne("Health_Care_Assist_Provider.Models.Appointment", "Appointment")
+                        .WithMany()
+                        .HasForeignKey("AppointmentId");
+
+                    b.HasOne("Health_Care_Assist_Provider.Models.Diagnosis", "Diagnosis")
+                        .WithMany()
+                        .HasForeignKey("DiagnosisId");
+
+                    b.HasOne("Health_Care_Assist_Provider.Models.Sponsor", "Sponsor")
+                        .WithMany()
+                        .HasForeignKey("SponsorId");
+                });
+
+            modelBuilder.Entity("Health_Care_Assist_Provider.Models.Diagnosis", b =>
+                {
+                    b.HasOne("Health_Care_Assist_Provider.Models.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId");
+                });
+
+            modelBuilder.Entity("Health_Care_Assist_Provider.Models.Doctor", b =>
+                {
+                    b.HasOne("Health_Care_Assist_Provider.Models.ApplicationUser", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId");
+                });
+
+            modelBuilder.Entity("Health_Care_Assist_Provider.Models.Patient", b =>
+                {
+                    b.HasOne("Health_Care_Assist_Provider.Models.ApplicationUser", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId");
+                });
+
+            modelBuilder.Entity("Health_Care_Assist_Provider.Models.Sponsor", b =>
+                {
+                    b.HasOne("Health_Care_Assist_Provider.Models.ApplicationUser", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

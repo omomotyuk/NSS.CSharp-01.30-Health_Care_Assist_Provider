@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Health_Care_Assist_Provider.Migrations
 {
-    public partial class SeedingUserTables : Migration
+    public partial class AddedModels : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,52 +48,6 @@ namespace Health_Care_Assist_Provider.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Doctor",
-                columns: table => new
-                {
-                    DoctorId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PersonId = table.Column<string>(nullable: false),
-                    Specialty = table.Column<string>(nullable: false),
-                    LicenseNumber = table.Column<string>(nullable: false),
-                    Rating = table.Column<float>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Doctor", x => x.DoctorId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Patient",
-                columns: table => new
-                {
-                    PatientId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PersonId = table.Column<string>(nullable: false),
-                    DateOfBirth = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Patient", x => x.PatientId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Sponsor",
-                columns: table => new
-                {
-                    SponsorId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PersonId = table.Column<string>(nullable: false),
-                    CurrentDonation = table.Column<float>(nullable: false),
-                    TotalDonation = table.Column<float>(nullable: false),
-                    TotalAssists = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Sponsor", x => x.SponsorId);
                 });
 
             migrationBuilder.CreateTable(
@@ -202,15 +156,161 @@ namespace Health_Care_Assist_Provider.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Doctor",
+                columns: table => new
+                {
+                    DoctorId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PersonId = table.Column<string>(nullable: true),
+                    Specialty = table.Column<string>(nullable: false),
+                    LicenseNumber = table.Column<string>(nullable: false),
+                    Rating = table.Column<float>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Doctor", x => x.DoctorId);
+                    table.ForeignKey(
+                        name: "FK_Doctor_AspNetUsers_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Patient",
+                columns: table => new
+                {
+                    PatientId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PersonId = table.Column<string>(nullable: true),
+                    DateOfBirth = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Patient", x => x.PatientId);
+                    table.ForeignKey(
+                        name: "FK_Patient_AspNetUsers_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Sponsor",
+                columns: table => new
+                {
+                    SponsorId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PersonId = table.Column<string>(nullable: true),
+                    CurrentDonation = table.Column<float>(nullable: false),
+                    TotalDonation = table.Column<float>(nullable: false),
+                    TotalAssists = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sponsor", x => x.SponsorId);
+                    table.ForeignKey(
+                        name: "FK_Sponsor_AspNetUsers_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Appointment",
+                columns: table => new
+                {
+                    AppointmentId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DoctorId = table.Column<int>(nullable: true),
+                    DateAndTime = table.Column<DateTime>(nullable: false),
+                    Price = table.Column<float>(nullable: false),
+                    Available = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Appointment", x => x.AppointmentId);
+                    table.ForeignKey(
+                        name: "FK_Appointment_Doctor_DoctorId",
+                        column: x => x.DoctorId,
+                        principalTable: "Doctor",
+                        principalColumn: "DoctorId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Diagnosis",
+                columns: table => new
+                {
+                    DiagnosisId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    PatientId = table.Column<int>(nullable: true),
+                    Specialty = table.Column<string>(maxLength: 25, nullable: false),
+                    Description = table.Column<string>(maxLength: 255, nullable: true),
+                    Active = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Diagnosis", x => x.DiagnosisId);
+                    table.ForeignKey(
+                        name: "FK_Diagnosis_Patient_PatientId",
+                        column: x => x.PatientId,
+                        principalTable: "Patient",
+                        principalColumn: "PatientId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Assist",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    DiagnosisId = table.Column<int>(nullable: true),
+                    SponsorId = table.Column<int>(nullable: true),
+                    AppointmentId = table.Column<int>(nullable: true),
+                    Rating = table.Column<float>(nullable: false),
+                    Comment = table.Column<string>(maxLength: 255, nullable: true),
+                    Active = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Assist", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Assist_Appointment_AppointmentId",
+                        column: x => x.AppointmentId,
+                        principalTable: "Appointment",
+                        principalColumn: "AppointmentId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Assist_Diagnosis_DiagnosisId",
+                        column: x => x.DiagnosisId,
+                        principalTable: "Diagnosis",
+                        principalColumn: "DiagnosisId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Assist_Sponsor_SponsorId",
+                        column: x => x.SponsorId,
+                        principalTable: "Sponsor",
+                        principalColumn: "SponsorId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "StreetAddress", "TwoFactorEnabled", "UserName", "UserType" },
                 values: new object[,]
                 {
-                    { "00000000-ffff-ffff-ffff-ffffffffffff", 0, "7b824f0e-6e25-4386-b0a8-589f609817d7", "first.admin@hcap.org", true, "First", "Admin", false, null, "FIRST.ADMIN@HCAP.ORG", "FIRST.ADMIN@HCAP.ORG", "AQAAAAEAACcQAAAAEMduUiCzA92gulP/Pe3laRvgFTRiV5i/awNCmiVw4Xmz/r+GzOeA/RdelloDg4iPpg==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794577", "123 Infinity Way", false, "first.admin@hcap.org", 1 },
-                    { "11100000-ffff-ffff-ffff-ffffffffffff", 0, "77acb81c-c625-465c-a5a5-bdf1aaa2d6aa", "p.patientson@home.net", true, "Patient", "Patientson", false, null, "P.PATIENTSON@HOME.NET", "P.PATIENTSON@HOME.NET", "AQAAAAEAACcQAAAAEMJRyOK6JvMjcC5pQfMXOEY5Xf8D1Ny6UegnKM2V5QBagKT5iV5Mzi7kmXrYK44goQ==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794001", "001 Patient Addr", false, "p.patientson@home.net", 1 },
-                    { "22200000-ffff-ffff-ffff-ffffffffffff", 0, "faeab75b-d4d1-41f1-9ba8-e0d1cd39601f", "d.doctorson@work.com", true, "Doctor", "Doctorson", false, null, "D.DOCTORSON@WORK.COM", "D.DOCTORSON@WORK.COM", "AQAAAAEAACcQAAAAELdsJCS0oSn+FHawO80MFxT1SBXKswOAjdStjIp9emSI9XMkXVzJ7BXCUKoqLbInJA==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794002", "002 Doctor Addr", false, "d.doctorson@work.com", 2 },
-                    { "33300000-ffff-ffff-ffff-ffffffffffff", 0, "3400e437-7ba3-4f1e-a80b-62274f8227cc", "s.sponsorson@fund.net", true, "Sponsor", "Sponsorson", false, null, "S.SPONSORSON@FUND.ORG", "S.SPONSORSON@FUND.ORG", "AQAAAAEAACcQAAAAEEFIgdK/0q07Tq+EkUwrLyqpkH6YmVjewkersfF+fJU0JmWmeA1RmccmR47KqnElcg==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794003", "003 Sponsor Addr", false, "s.sponsorson@fund.org", 3 }
+                    { "00000000-ffff-ffff-ffff-ffffffffffff", 0, "da7db3f3-6d13-4a2d-939f-57c61e6be1ea", "first.admin@hcap.org", true, "First", "Admin", false, null, "FIRST.ADMIN@HCAP.ORG", "FIRST.ADMIN@HCAP.ORG", "AQAAAAEAACcQAAAAEMQdK204M1mBISzF+4Mh5LFqTw6XuB0Imo5/xKraij49v4NWHZnMEc2/s0fuNvxFBg==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794577", "123 Infinity Way", false, "first.admin@hcap.org", 1 },
+                    { "11100000-ffff-ffff-ffff-ffffffffffff", 0, "0e6aa792-842b-4d0e-8542-5037192c5afe", "p.patientson@home.net", true, "Patient", "Patientson", false, null, "P.PATIENTSON@HOME.NET", "P.PATIENTSON@HOME.NET", "AQAAAAEAACcQAAAAEJ8/KlQr0Y8+PcSdrLLDJLdQLaJu5L7tiDHPXYlPluQ/cMx8ly8Db4fdnNvJoJjdfQ==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794001", "001 Patient Addr", false, "p.patientson@home.net", 1 },
+                    { "22200000-ffff-ffff-ffff-ffffffffffff", 0, "a2964166-7c85-4467-9621-0dc2d970f96d", "d.doctorson@work.com", true, "Doctor", "Doctorson", false, null, "D.DOCTORSON@WORK.COM", "D.DOCTORSON@WORK.COM", "AQAAAAEAACcQAAAAEOh+Mk6RRt203e5TQuz26msCe2wY/gWAMgABo83yZaCQSMdeP3uQdBA0cu4FWBeObw==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794002", "002 Doctor Addr", false, "d.doctorson@work.com", 2 },
+                    { "33300000-ffff-ffff-ffff-ffffffffffff", 0, "1fe92a91-c2a2-4da9-a7d3-690569fe82bf", "s.sponsorson@fund.net", true, "Sponsor", "Sponsorson", false, null, "S.SPONSORSON@FUND.ORG", "S.SPONSORSON@FUND.ORG", "AQAAAAEAACcQAAAAEHnE5T3s/jLW21i2o6biF4HHk0DQcdqG24AX80vVG97p1rUmhQBDZYD9p1J+g176Lg==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794003", "003 Sponsor Addr", false, "s.sponsorson@fund.org", 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -226,7 +326,12 @@ namespace Health_Care_Assist_Provider.Migrations
             migrationBuilder.InsertData(
                 table: "Sponsor",
                 columns: new[] { "SponsorId", "CurrentDonation", "PersonId", "TotalAssists", "TotalDonation" },
-                values: new object[] { 1, 0f, "11100000-ffff-ffff-ffff-ffffffffffff", 0, 0f });
+                values: new object[] { 1, 0f, "33300000-ffff-ffff-ffff-ffffffffffff", 0, 0f });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Appointment_DoctorId",
+                table: "Appointment",
+                column: "DoctorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -266,6 +371,41 @@ namespace Health_Care_Assist_Provider.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Assist_AppointmentId",
+                table: "Assist",
+                column: "AppointmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Assist_DiagnosisId",
+                table: "Assist",
+                column: "DiagnosisId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Assist_SponsorId",
+                table: "Assist",
+                column: "SponsorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Diagnosis_PatientId",
+                table: "Diagnosis",
+                column: "PatientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Doctor_PersonId",
+                table: "Doctor",
+                column: "PersonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Patient_PersonId",
+                table: "Patient",
+                column: "PersonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sponsor_PersonId",
+                table: "Sponsor",
+                column: "PersonId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -286,16 +426,25 @@ namespace Health_Care_Assist_Provider.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Doctor");
+                name: "Assist");
 
             migrationBuilder.DropTable(
-                name: "Patient");
+                name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Appointment");
+
+            migrationBuilder.DropTable(
+                name: "Diagnosis");
 
             migrationBuilder.DropTable(
                 name: "Sponsor");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "Doctor");
+
+            migrationBuilder.DropTable(
+                name: "Patient");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
