@@ -6,9 +6,9 @@
 
 ## Brief Proposal:
 A healthcare-related humanitarian project for three groups of people: 
-* who need healthcare treatment (patients), 
-* who provide healthcare-related services (doctors), 
-* who can provide appropriate help to get healthcare treatment (sponsors).
+* who need healthcare treatment (Patients), 
+* who provide healthcare-related services (Doctors), 
+* who can provide appropriate help to get healthcare treatment (Sponsors).
 The application creates a connection between people who cannot afford health insurance and healthcare providers like doctors and physicians. In addition, sponsors can donate money to help with external costs associated with treatments.
 
 
@@ -19,14 +19,14 @@ The application creates a connection between people who cannot afford health ins
 
 ## MVP Definition: 
 * User-specific CRUD for tree type of users: Patient, Doctor, and Sponsor
-* User-specific lists of the Patients, Doctors, and Sponsors
-* Ability for a Patient to create Diagnosis request
-* Ability to schedule an Appointment when appropriate date-time and aids funds are available
-* Ability for a Patient to rate an Appointment and comment it
-* Ability for a Doctor to provide information on Date, Time and Price of Appointments
-* Ability for a Doctor to schedule an Appointment for a particular Patient with no charge for it
-* Ability for a Sponsor to indicate the sum of money she can give for aid
-* Ability for a Sponsor to indicate a Patient whom she provides assist.
+* User-specific lists of the Patient, Doctor, and Sponsor
+* Ability for the Patient to create a Diagnosis request
+* Ability for the Patient to schedule an Appointment when appropriate date-time and aids funds are available
+* Ability for the Patient to rate the Appointment and to comment it
+* Ability for the Doctor to provide an information on the Date, Time and Price of the Appointment
+* Ability for the Doctor to schedule the Appointment for the particular Patient with no charge for it
+* Ability for the Sponsor to indicate the sum of money she can give for aid
+* Ability for the Sponsor to indicate the Patient whom she provides assist
 
 
 ## User Stories
@@ -34,19 +34,22 @@ The application creates a connection between people who cannot afford health ins
 1. User should be able to create an account
 When the user clicks on the Register link
 Then the following input fields should be presented:
-- List of types of the User account to choose from (drop-down select menu?)
+- List of types of the User account to choose from (drop-down select menu)
 - the e-mail address
 - the password and password confirmation
 
 2. User should be asked to provide required account information
 When the user is logged in for the first time
 Then a form should be displayed in which the following information can be entered:
+
 for all type of users:
 - First name and Last name
 - contact e-mail address (can be different from the account e-mail)
 - mailing home or office address
+
 for Patient account type:
 - Date of Birth
+
 for Doctor account type:
 - doctors Specialization
 - valid license number
@@ -69,7 +72,7 @@ Then the list of all Sponsors with available aids money at the moment should be 
 - First name and last name
 - Sum of money for aids available at the moment
 
-4. Given a Patient wants to schedule an appointment
+6. Given a Patient wants to schedule an appointment
 When the Patient clicks on the Appointment item in the navigation bar
 Then the following information should be presented:
 - the Patients own First name and last name

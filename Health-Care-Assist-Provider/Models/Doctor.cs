@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,7 +11,7 @@ namespace Health_Care_Assist_Provider.Models
     {
         public int DoctorId { get; set; }
 
-        [Required]
+        //[ForeignKey("Id")]
         public string PersonId { get; set; }
         public ApplicationUser Person { get; set; }
 

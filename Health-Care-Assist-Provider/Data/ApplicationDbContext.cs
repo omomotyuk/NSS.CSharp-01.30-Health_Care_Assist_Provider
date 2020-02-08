@@ -15,7 +15,12 @@ namespace Health_Care_Assist_Provider.Data
         {
         }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-        //public DbSet<Product> Product { get; set; }
+        public DbSet<Patient> Patient { get; set; }
+        public DbSet<Doctor> Doctor { get; set; }
+        public DbSet<Sponsor> Sponsor { get; set; }
+        public DbSet<Diagnosis> Diagnosis { get; set; }
+        public DbSet<Appointment> Appointment { get; set; }
+        public DbSet<Assist> Assist { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -129,14 +134,14 @@ namespace Health_Care_Assist_Provider.Data
             };
             modelBuilder.Entity<Sponsor>().HasData(sUser);
         }
-        //public DbSet<Product> Product { get; set; }
+        ////public DbSet<Product> Product { get; set; }
 
-        public DbSet<Health_Care_Assist_Provider.Models.Patient> Patient { get; set; }
-        //public DbSet<Product> Product { get; set; }
+        //public DbSet<Health_Care_Assist_Provider.Models.Patient> Patient { get; set; }
+        ////public DbSet<Product> Product { get; set; }
 
-        public DbSet<Health_Care_Assist_Provider.Models.Doctor> Doctor { get; set; }
-        //public DbSet<Product> Product { get; set; }
+        //public DbSet<Health_Care_Assist_Provider.Models.Doctor> Doctor { get; set; }
+        ////public DbSet<Product> Product { get; set; }
 
-        public DbSet<Health_Care_Assist_Provider.Models.Sponsor> Sponsor { get; set; }
+        //public DbSet<Health_Care_Assist_Provider.Models.Sponsor> Sponsor { get; set; }
     }
 }
