@@ -26,5 +26,7 @@ namespace Health_Care_Assist_Provider.Models
         //[Required(ErrorMessage = "Doctors Rating is required")]
         [Display(Name = "Rating")]
         public float Rating { get; set; }
+
+        public virtual ICollection<Appointment> Appointments { get; set; }
     }
 }
