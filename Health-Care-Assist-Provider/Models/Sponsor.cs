@@ -24,5 +24,7 @@ namespace Health_Care_Assist_Provider.Models
 
         [Display(Name = "Total Assists")]
         public int TotalAssists { get; set; }
+
+        public virtual ICollection<Assist> Assists { get; set; }
     }
 }

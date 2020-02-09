@@ -19,5 +19,7 @@ namespace Health_Care_Assist_Provider.Models
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
+
+        public virtual ICollection<Diagnosis> Diagnoses { get; set; }
     }
 }
