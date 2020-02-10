@@ -15,10 +15,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Person.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Person.LastName)
+                @Html.LabelForModel("Full name")
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CurrentDonation)
@@ -43,7 +40,7 @@
             <th>
                 @Html.DisplayNameFor(model => headerMetadata.Active)
             </th>
-            <th></th>
+            @*<th></th>*@
         </tr>
     </thead>
     <tbody>
@@ -55,14 +52,25 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => sponsor.Person.FirstName)
+                            <a asp-controller="Sponsors" asp-action="Details" asp-route-id="@sponsor.SponsorId">
+                                @Html.DisplayFor(modelItem => sponsor.Person.FirstName)
+                                @Html.DisplayFor(modelItem => sponsor.Person.LastName)
+                            </a>
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => sponsor.Person.LastName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => sponsor.CurrentDonation)
-                        </td>
+                        @if (sponsor.Person.UserType == 3)
+                        {
+                            <td>
+                                <a asp-controller="Sponsors" asp-action="Edit" asp-route-id="@sponsor.SponsorId">
+                                    @Html.DisplayFor(modelItem => sponsor.CurrentDonation)
+                                </a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => sponsor.CurrentDonation)
+                            </td>
+                        }
                         <td>
                             @Html.DisplayFor(modelItem => sponsor.TotalDonation)
                         </td>
@@ -81,11 +89,11 @@
                         <td>
                             @Html.DisplayFor(modelItem => assist.Active)
                         </td>
-                        <td>
+                        @*<td>
                             <a asp-action="Edit" asp-route-id="@sponsor.SponsorId">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@sponsor.SponsorId">Details</a> @*|
-                            <a asp-action="Delete" asp-route-id="@sponsor.SponsorId">Delete</a>*@
-                        </td>
+                            <a asp-action="Details" asp-route-id="@sponsor.SponsorId">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@sponsor.SponsorId">Delete</a>
+                        </td>*@
                     </tr>
                 }
             }
@@ -93,14 +101,25 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => sponsor.Person.FirstName)
+                        <a asp-controller="Sponsors" asp-action="Details" asp-route-id="@sponsor.SponsorId">
+                            @Html.DisplayFor(modelItem => sponsor.Person.FirstName)
+                            @Html.DisplayFor(modelItem => sponsor.Person.LastName)
+                        </a>
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => sponsor.Person.LastName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => sponsor.CurrentDonation)
-                    </td>
+                    @if (sponsor.Person.UserType == 3)
+                    {
+                        <td>
+                            <a asp-controller="Sponsors" asp-action="Edit" asp-route-id="@sponsor.SponsorId">
+                                @Html.DisplayFor(modelItem => sponsor.CurrentDonation)
+                            </a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => sponsor.CurrentDonation)
+                        </td>
+                    }
                     <td>
                         @Html.DisplayFor(modelItem => sponsor.TotalDonation)
                     </td>
@@ -111,11 +130,11 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>
+                    @*<td>
                         <a asp-action="Edit" asp-route-id="@sponsor.SponsorId">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@sponsor.SponsorId">Details</a> @*|
-                        <a asp-action="Delete" asp-route-id="@sponsor.SponsorId">Delete</a>*@
-                    </td>
+                        <a asp-action="Details" asp-route-id="@sponsor.SponsorId">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@sponsor.SponsorId">Delete</a>
+                    </td>*@
                 </tr>
             }
         }
