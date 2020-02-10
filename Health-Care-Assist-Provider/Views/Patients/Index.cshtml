@@ -15,21 +15,18 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Person.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Person.LastName)
+                @Html.LabelForModel("Full name")
             </th>
             @*<th>
-                    @Html.DisplayNameFor(model => model.Person)
-                </th>*@
+                @Html.DisplayNameFor(model => model.Person)
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.DateOfBirth)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Diagnoses)
             </th>
-            <th></th>
+            @*<th></th>*@
         </tr>
     </thead>
     <tbody>
@@ -41,10 +38,10 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => patient.Person.FirstName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => patient.Person.LastName)
+                            <a asp-controller="Patients" asp-action="Details" asp-route-id="@patient.PatientId">
+                                @Html.DisplayFor(modelItem => patient.Person.FirstName)
+                                @Html.DisplayFor(modelItem => patient.Person.LastName)
+                            </a>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => patient.DateOfBirth)
@@ -52,11 +49,11 @@
                         <td>
                             @Html.DisplayFor(modelItem => diagnosis.Specialty)
                         </td>
-                        <td>
+                        @*<td>
                             <a asp-action="Edit" asp-route-id="@patient.PatientId">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@patient.PatientId">Details</a> @*|
-                                <a asp-action="Delete" asp-route-id="@patient.PatientId">Delete</a>*@
-                        </td>
+                                    <a asp-action="Details" asp-route-id="@patient.PatientId">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@patient.PatientId">Delete</a>
+                        </td>*@
                     </tr>
                 }
             }
@@ -64,20 +61,20 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => patient.Person.FirstName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => patient.Person.LastName)
+                        <a asp-controller="Patients" asp-action="Details" asp-route-id="@patient.PatientId">
+                            @Html.DisplayFor(modelItem => patient.Person.FirstName)
+                            @Html.DisplayFor(modelItem => patient.Person.LastName)
+                        </a>
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => patient.DateOfBirth)
                     </td>
                     <td></td>
-                    <td>
+                    @*<td>
                         <a asp-action="Edit" asp-route-id="@patient.PatientId">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@patient.PatientId">Details</a> @*|
-                            <a asp-action="Delete" asp-route-id="@patient.PatientId">Delete</a>*@
-                    </td>
+                            <a asp-action="Details" asp-route-id="@patient.PatientId">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@patient.PatientId">Delete</a>
+                    </td>*@
                 </tr>
             }
         }
