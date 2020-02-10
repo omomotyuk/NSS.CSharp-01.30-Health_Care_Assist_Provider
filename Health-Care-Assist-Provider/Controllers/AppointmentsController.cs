@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Health_Care_Assist_Provider.Data;
 using Health_Care_Assist_Provider.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Health_Care_Assist_Provider.Controllers
 {
     public class AppointmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AppointmentsController(ApplicationDbContext context)
+        public AppointmentsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Appointments
@@ -59,6 +62,10 @@ namespace Health_Care_Assist_Provider.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("AppointmentId,DoctorId,DateAndTime,Price,Available")] Appointment appointment)
         {
+            var user = await GetCurrentUserAsync();
+            var doctor = await _context.Doctor.FirstOrDefaultAsync(d => d.PersonId == user.Id);
+            appointment.DoctorId = doctor.DoctorId;
+
             if (ModelState.IsValid)
             {
                 _context.Add(appointment);
@@ -156,5 +163,6 @@ namespace Health_Care_Assist_Provider.Controllers
         {
             return _context.Appointment.Any(e => e.AppointmentId == id);
         }
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
     }
 }
