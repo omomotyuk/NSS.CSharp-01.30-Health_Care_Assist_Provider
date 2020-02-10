@@ -4,11 +4,11 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Patients</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@*<p>
+        <a asp-action="Create">Create New</a>
+    </p>*@
 <table class="table">
     <thead>
         <tr>
@@ -27,34 +27,33 @@
             <th>
                 @Html.DisplayNameFor(model => model.Diagnoses)
             </th>
-
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var patient in Model)
         {
-            @if (item.Diagnoses.Count != 0)
+            @if (patient.Diagnoses.Count != 0)
             {
-                @foreach (var diagnosis in item.Diagnoses)
+                @foreach (var diagnosis in patient.Diagnoses)
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Person.FirstName)
+                            @Html.DisplayFor(modelItem => patient.Person.FirstName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Person.LastName)
+                            @Html.DisplayFor(modelItem => patient.Person.LastName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.DateOfBirth)
+                            @Html.DisplayFor(modelItem => patient.DateOfBirth)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => diagnosis.Specialty)
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.PatientId">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.PatientId">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.PatientId">Delete</a>
+                            <a asp-action="Edit" asp-route-id="@patient.PatientId">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@patient.PatientId">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@patient.PatientId">Delete</a>
                         </td>
                     </tr>
                 }
@@ -63,23 +62,23 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Person.FirstName)
+                        @Html.DisplayFor(modelItem => patient.Person.FirstName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Person.LastName)
+                        @Html.DisplayFor(modelItem => patient.Person.LastName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.DateOfBirth)
+                        @Html.DisplayFor(modelItem => patient.DateOfBirth)
                     </td>
+                    <td></td>
                     <td>
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.PatientId">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.PatientId">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.PatientId">Delete</a>
+                        <a asp-action="Edit" asp-route-id="@patient.PatientId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@patient.PatientId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@patient.PatientId">Delete</a>
                     </td>
                 </tr>
             }
         }
     </tbody>
 </table>
+

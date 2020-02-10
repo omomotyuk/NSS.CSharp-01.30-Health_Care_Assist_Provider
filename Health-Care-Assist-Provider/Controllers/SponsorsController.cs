@@ -26,7 +26,8 @@ namespace Health_Care_Assist_Provider.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Sponsor
-                .Include(s => s.Person);
+                .Include(s => s.Person)
+                .Include(s => s.Assists);
 
             return View(await applicationDbContext.ToListAsync());
         }
