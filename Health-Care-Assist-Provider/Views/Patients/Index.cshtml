@@ -18,36 +18,68 @@
             <th>
                 @Html.DisplayNameFor(model => model.Person.LastName)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Person)
-            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Person)
+                </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.DateOfBirth)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Diagnoses)
+            </th>
+
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Person.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Person.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Person.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOfBirth)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.PatientId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.PatientId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.PatientId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            @if (item.Diagnoses.Count != 0)
+            {
+                @foreach (var diagnosis in item.Diagnoses)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Person.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Person.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateOfBirth)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => diagnosis.Specialty)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.PatientId">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.PatientId">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.PatientId">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Person.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Person.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateOfBirth)
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.PatientId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.PatientId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.PatientId">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
     </tbody>
 </table>

@@ -7,22 +7,28 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Health_Care_Assist_Provider.Data;
 using Health_Care_Assist_Provider.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Health_Care_Assist_Provider.Controllers
 {
     public class PatientsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public PatientsController(ApplicationDbContext context)
+        public PatientsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Patients
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Patient.Include(p => p.Person);
+            var applicationDbContext = _context.Patient
+                .Include(p => p.Person)
+                .Include(d => d.Diagnoses);
+
             return View(await applicationDbContext.ToListAsync());
         }
 
