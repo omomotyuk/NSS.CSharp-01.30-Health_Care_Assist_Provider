@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Health_Care_Assist_Provider.Data;
 using Health_Care_Assist_Provider.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Health_Care_Assist_Provider.Controllers
 {
     public class AssistsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AssistsController(ApplicationDbContext context)
+        public AssistsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Assists
@@ -168,5 +171,6 @@ namespace Health_Care_Assist_Provider.Controllers
         {
             return _context.Assist.Any(e => e.Id == id);
         }
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
     }
 }
