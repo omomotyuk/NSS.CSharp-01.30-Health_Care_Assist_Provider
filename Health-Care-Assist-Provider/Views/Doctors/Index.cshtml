@@ -26,9 +26,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Specialty)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LicenseNumber)
-            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.LicenseNumber)
+                </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Rating)
             </th>
@@ -72,14 +72,16 @@
                         <td>
                             @Html.DisplayFor(modelItem => doctor.Specialty)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => doctor.LicenseNumber)
-                        </td>
+                        @*<td>
+                                @Html.DisplayFor(modelItem => doctor.LicenseNumber)
+                            </td>*@
                         <td>
                             @Html.DisplayFor(modelItem => doctor.Rating)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => appointment.DateAndTime)
+                            <a asp-controller="Appointments" asp-action="Details" asp-route-id="@appointment.AppointmentId">
+                                @Html.DisplayFor(modelItem => appointment.DateAndTime)
+                            </a>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => appointment.Price)
@@ -121,9 +123,9 @@
                     <td>
                         @Html.DisplayFor(modelItem => doctor.Specialty)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => doctor.LicenseNumber)
-                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => doctor.LicenseNumber)
+                        </td>*@
                     <td>
                         @Html.DisplayFor(modelItem => doctor.Rating)
                     </td>
@@ -132,7 +134,9 @@
                     <td></td>
                     @if (UserManager.GetUserId(User) == doctor.Person.Id)
                     {
-                        <td><a asp-controller="Appointments" asp-action="Create" asp-route-id="@doctor.DoctorId">Add Appointment</a></td>
+                        <td>
+                            <a asp-controller="Appointments" asp-action="Create" asp-route-id="@doctor.DoctorId">Add Appointment</a>
+                        </td>
                     }
                     else
                     {
