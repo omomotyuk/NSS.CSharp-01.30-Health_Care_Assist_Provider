@@ -4,16 +4,19 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Sponsors</h1>
 
-<p>
+@*<p>
     <a asp-action="Create">Create New</a>
-</p>
+</p>*@
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Person)
+                @Html.DisplayNameFor(model => model.Person.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Person.LastName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CurrentDonation)
@@ -24,30 +27,95 @@
             <th>
                 @Html.DisplayNameFor(model => model.TotalAssists)
             </th>
+            @{var headerMetadata = Model.ToList()[0].Assists.FirstOrDefault();}
+            @*DiagnosisId SponsorId AppointmentId*@
+            <th>
+                @Html.DisplayNameFor(model => headerMetadata.DateCreated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headerMetadata.Rating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headerMetadata.Comment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headerMetadata.Active)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Person.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CurrentDonation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalDonation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalAssists)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.SponsorId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.SponsorId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.SponsorId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var sponsor in Model)
+        {
+            @if (sponsor.Assists.Count != 0)
+            {
+                @foreach (var assist in sponsor.Assists)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => sponsor.Person.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => sponsor.Person.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => sponsor.CurrentDonation)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => sponsor.TotalDonation)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => sponsor.TotalAssists)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => assist.DateCreated)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => assist.Rating)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => assist.Comment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => assist.Active)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@sponsor.SponsorId">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@sponsor.SponsorId">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@sponsor.SponsorId">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => sponsor.Person.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => sponsor.Person.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => sponsor.CurrentDonation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => sponsor.TotalDonation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => sponsor.TotalAssists)
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@sponsor.SponsorId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@sponsor.SponsorId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@sponsor.SponsorId">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
     </tbody>
 </table>
