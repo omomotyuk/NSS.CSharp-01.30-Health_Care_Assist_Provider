@@ -18,18 +18,22 @@
                 @Html.LabelForModel("Full name")
             </th>
             @*<th>
-                @Html.DisplayNameFor(model => model.Person)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.Person)
+                </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.DateOfBirth)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Diagnoses)
             </th>
-            @*<th></th>*@
+            <th></th>
         </tr>
     </thead>
     <tbody>
+        @using Microsoft.AspNetCore.Identity
+        @inject SignInManager<ApplicationUser> SignInManager
+        @inject UserManager<ApplicationUser> UserManager
+
         @foreach (var patient in Model)
         {
             @if (patient.Diagnoses.Count != 0)
@@ -49,11 +53,19 @@
                         <td>
                             @Html.DisplayFor(modelItem => diagnosis.Specialty)
                         </td>
+                        @if (UserManager.GetUserId(User) == patient.Person.Id)
+                        {
+                            <td><a asp-controller="Diagnoses" asp-action="Create" asp-route-id="@patient.PatientId">Add Diagnosis</a></td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
                         @*<td>
-                            <a asp-action="Edit" asp-route-id="@patient.PatientId">Edit</a> |
-                                    <a asp-action="Details" asp-route-id="@patient.PatientId">Details</a> |
+                                <a asp-action="Edit" asp-route-id="@patient.PatientId">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@patient.PatientId">Details</a> |
                                 <a asp-action="Delete" asp-route-id="@patient.PatientId">Delete</a>
-                        </td>*@
+                            </td>*@
                     </tr>
                 }
             }
@@ -70,11 +82,19 @@
                         @Html.DisplayFor(modelItem => patient.DateOfBirth)
                     </td>
                     <td></td>
+                    @if (UserManager.GetUserId(User) == patient.Person.Id)
+                    {
+                        <td><a asp-controller="Diagnoses" asp-action="Create" asp-route-id="@patient.PatientId">Add Diagnosis</a></td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
                     @*<td>
-                        <a asp-action="Edit" asp-route-id="@patient.PatientId">Edit</a> |
+                            <a asp-action="Edit" asp-route-id="@patient.PatientId">Edit</a> |
                             <a asp-action="Details" asp-route-id="@patient.PatientId">Details</a> |
                             <a asp-action="Delete" asp-route-id="@patient.PatientId">Delete</a>
-                    </td>*@
+                        </td>*@
                 </tr>
             }
         }
