@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Health_Care_Assist_Provider.Data;
 using Health_Care_Assist_Provider.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Health_Care_Assist_Provider.Controllers
 {
     public class DiagnosesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public DiagnosesController(ApplicationDbContext context)
+        public DiagnosesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Diagnoses
@@ -46,10 +49,19 @@ namespace Health_Care_Assist_Provider.Controllers
         }
 
         // GET: Diagnoses/Create
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
-            ViewData["PatientId"] = new SelectList(_context.Patient, "PatientId", "PatientId");
-            return View();
+            if (id == null)
+            {
+                ViewData["PatientId"] = new SelectList(_context.Patient, "PatientId", "PatientId");
+                return View();
+            }
+            else
+            {
+                //ViewData["PatientId"] = id;
+                ViewData["PatientId"] = new SelectList(_context.Patient, "PatientId", "PatientId");
+                return View();
+            }
         }
 
         // POST: Diagnoses/Create
@@ -59,6 +71,11 @@ namespace Health_Care_Assist_Provider.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DiagnosisId,DateCreated,PatientId,Specialty,Description,Active")] Diagnosis diagnosis)
         {
+            var user = await GetCurrentUserAsync();
+            var patient = await _context.Patient.FirstOrDefaultAsync(p => p.PersonId == user.Id);
+
+            diagnosis.PatientId = patient.PatientId;
+
             if (ModelState.IsValid)
             {
                 _context.Add(diagnosis);
@@ -156,5 +173,7 @@ namespace Health_Care_Assist_Provider.Controllers
         {
             return _context.Diagnosis.Any(e => e.DiagnosisId == id);
         }
+
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
     }
 }
