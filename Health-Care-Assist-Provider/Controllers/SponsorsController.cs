@@ -83,11 +83,24 @@ namespace Health_Care_Assist_Provider.Controllers
                 return NotFound();
             }
 
-            var sponsor = await _context.Sponsor.FindAsync(id);
+            //var sponsor = await _context.Sponsor.FindAsync(id);
+            var sponsor = await _context.Sponsor
+                            .Include(p => p.Person)
+                            .FirstOrDefaultAsync(m => m.SponsorId == id);
+
             if (sponsor == null)
             {
                 return NotFound();
             }
+
+            var currentUser = await GetCurrentUserAsync();
+
+            if (!sponsor.Person.Id.Equals(currentUser.Id))
+            {
+                TempData["ErrorMessage"] = $"Sorry {currentUser.FirstName}, you can't edit this sponsor info.";
+                return RedirectToAction("Index");
+            }
+
             ViewData["PersonId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", sponsor.PersonId);
             return View(sponsor);
         }
@@ -139,9 +152,18 @@ namespace Health_Care_Assist_Provider.Controllers
             var sponsor = await _context.Sponsor
                 .Include(s => s.Person)
                 .FirstOrDefaultAsync(m => m.SponsorId == id);
+
             if (sponsor == null)
             {
                 return NotFound();
+            }
+
+            var currentUser = await GetCurrentUserAsync();
+
+            if (!sponsor.Person.Id.Equals(currentUser.Id))
+            {
+                TempData["ErrorMessage"] = $"Sorry {currentUser.FirstName}, you can't delete this sponsor info.";
+                return RedirectToAction("Index");
             }
 
             return View(sponsor);
@@ -162,5 +184,7 @@ namespace Health_Care_Assist_Provider.Controllers
         {
             return _context.Sponsor.Any(e => e.SponsorId == id);
         }
+
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
     }
 }

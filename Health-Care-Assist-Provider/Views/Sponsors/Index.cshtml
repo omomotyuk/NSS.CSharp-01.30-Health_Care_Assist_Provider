@@ -4,11 +4,13 @@
     ViewData["Title"] = "Index";
 }
 
+<h2 class="alert-danger">@TempData["ErrorMessage"]</h2>
+
 <h1>Sponsors</h1>
 
 @*<p>
-    <a asp-action="Create">Create New</a>
-</p>*@
+        <a asp-action="Create">Create New</a>
+    </p>*@
 <table class="table">
     <thead>
         <tr>
@@ -81,8 +83,8 @@
                         </td>
                         <td>
                             <a asp-action="Edit" asp-route-id="@sponsor.SponsorId">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@sponsor.SponsorId">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@sponsor.SponsorId">Delete</a>
+                            <a asp-action="Details" asp-route-id="@sponsor.SponsorId">Details</a> @*|
+                            <a asp-action="Delete" asp-route-id="@sponsor.SponsorId">Delete</a>*@
                         </td>
                     </tr>
                 }
@@ -111,8 +113,8 @@
                     <td></td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@sponsor.SponsorId">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@sponsor.SponsorId">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@sponsor.SponsorId">Delete</a>
+                        <a asp-action="Details" asp-route-id="@sponsor.SponsorId">Details</a> @*|
+                        <a asp-action="Delete" asp-route-id="@sponsor.SponsorId">Delete</a>*@
                     </td>
                 </tr>
             }
