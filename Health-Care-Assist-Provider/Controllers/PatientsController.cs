@@ -83,11 +83,24 @@ namespace Health_Care_Assist_Provider.Controllers
                 return NotFound();
             }
 
-            var patient = await _context.Patient.FindAsync(id);
+            //var patient = await _context.Patient.FindAsync(id);
+            var patient = await _context.Patient
+                                        .Include(p => p.Person)
+                                        .FirstOrDefaultAsync(m => m.PatientId == id);
+
             if (patient == null)
             {
                 return NotFound();
             }
+
+            var currentUser = await GetCurrentUserAsync();
+
+            if (!patient.Person.Id.Equals(currentUser.Id))
+            {
+                TempData["ErrorMessage"] = $"Sorry {currentUser.FirstName}, you can't edit this patient info.";
+                return RedirectToAction("Index");
+            }
+
             ViewData["PersonId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", patient.PersonId);
             return View(patient);
         }
@@ -139,9 +152,18 @@ namespace Health_Care_Assist_Provider.Controllers
             var patient = await _context.Patient
                 .Include(p => p.Person)
                 .FirstOrDefaultAsync(m => m.PatientId == id);
+
             if (patient == null)
             {
                 return NotFound();
+            }
+
+            var currentUser = await GetCurrentUserAsync();
+
+            if (!patient.Person.Id.Equals(currentUser.Id))
+            {
+                TempData["ErrorMessage"] = $"Sorry {currentUser.FirstName}, you can't delete this patient info.";
+                return RedirectToAction("Index");
             }
 
             return View(patient);
@@ -162,5 +184,7 @@ namespace Health_Care_Assist_Provider.Controllers
         {
             return _context.Patient.Any(e => e.PatientId == id);
         }
+
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
     }
 }

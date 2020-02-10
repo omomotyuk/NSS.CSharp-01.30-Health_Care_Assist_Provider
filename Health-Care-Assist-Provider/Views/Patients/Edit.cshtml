@@ -4,20 +4,38 @@
     ViewData["Title"] = "Edit";
 }
 
+@*<h2 class="alert-danger">@TempData["ErrorMessage"]</h2>*@
+
 <h1>Edit</h1>
 
 <h4>Patient</h4>
 <hr />
+
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Person.FirstName)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => Model.Person.FirstName)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Person.LastName)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => Model.Person.LastName)
+    </dd>
+</dl>
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="PatientId" />
-            <div class="form-group">
-                <label asp-for="PersonId" class="control-label"></label>
-                <select asp-for="PersonId" class="form-control" asp-items="ViewBag.PersonId"></select>
-                <span asp-validation-for="PersonId" class="text-danger"></span>
-            </div>
+            @*<div class="form-group">
+                    <label asp-for="PersonId" class="control-label"></label>
+                    <select asp-for="PersonId" class="form-control" asp-items="ViewBag.PersonId"></select>
+                    <span asp-validation-for="PersonId" class="text-danger"></span>
+                </div>*@
             <div class="form-group">
                 <label asp-for="DateOfBirth" class="control-label"></label>
                 <input asp-for="DateOfBirth" class="form-control" />
