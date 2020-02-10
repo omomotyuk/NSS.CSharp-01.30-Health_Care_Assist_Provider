@@ -7,22 +7,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Health_Care_Assist_Provider.Data;
 using Health_Care_Assist_Provider.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Health_Care_Assist_Provider.Controllers
 {
     public class SponsorsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public SponsorsController(ApplicationDbContext context)
+        public SponsorsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Sponsors
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Sponsor.Include(s => s.Person);
+            var applicationDbContext = _context.Sponsor
+                .Include(s => s.Person);
+
             return View(await applicationDbContext.ToListAsync());
         }
 

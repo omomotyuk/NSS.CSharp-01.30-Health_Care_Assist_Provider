@@ -27,7 +27,7 @@ namespace Health_Care_Assist_Provider.Controllers
         {
             var applicationDbContext = _context.Patient
                 .Include(p => p.Person)
-                .Include(d => d.Diagnoses);
+                .Include(p => p.Diagnoses);
 
             return View(await applicationDbContext.ToListAsync());
         }

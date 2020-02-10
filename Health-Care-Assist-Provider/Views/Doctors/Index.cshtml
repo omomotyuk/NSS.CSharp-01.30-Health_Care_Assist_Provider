@@ -13,7 +13,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Person)
+                @Html.DisplayNameFor(model => model.Person.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Person.LastName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Specialty)
@@ -24,30 +27,87 @@
             <th>
                 @Html.DisplayNameFor(model => model.Rating)
             </th>
+            @{var headerMetadata = Model.ToList()[0].Appointments.FirstOrDefault();}
+            <th>
+                @Html.DisplayNameFor(model => headerMetadata.DateAndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headerMetadata.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headerMetadata.Available)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Person.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Specialty)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LicenseNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.DoctorId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.DoctorId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.DoctorId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var doctor in Model)
+        {
+            @if (doctor.Appointments.Count != 0)
+            {
+                @foreach (var appointment in doctor.Appointments)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => doctor.Person.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => doctor.Person.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => doctor.Specialty)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => doctor.LicenseNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => doctor.Rating)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => appointment.DateAndTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => appointment.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => appointment.Available)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@doctor.DoctorId">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@doctor.DoctorId">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@doctor.DoctorId">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => doctor.Person.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => doctor.Person.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => doctor.Specialty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => doctor.LicenseNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => doctor.Rating)
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@doctor.DoctorId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@doctor.DoctorId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@doctor.DoctorId">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
     </tbody>
 </table>
