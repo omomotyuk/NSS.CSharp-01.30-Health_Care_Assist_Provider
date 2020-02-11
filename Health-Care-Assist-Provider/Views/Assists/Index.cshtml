@@ -4,11 +4,11 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Assists</h1>
 
-<p>
+@*<p>
     <a asp-action="Create">Create New</a>
-</p>
+</p>*@
 <table class="table">
     <thead>
         <tr>
@@ -16,13 +16,22 @@
                 @Html.DisplayNameFor(model => model.DateCreated)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Diagnosis)
+                @Html.LabelForModel("Patient Full Name")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Sponsor)
+                @Html.LabelForModel("Sponsor Full Name")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Appointment)
+                @Html.LabelForModel("Doctor Full Name")
+            </th>
+            <th>
+                @Html.LabelForModel("Diagnosis/Specialty")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment.DateAndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment.Price)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Rating)
@@ -37,19 +46,34 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.DateCreated)
+                <a asp-controller="Assists" asp-action="Details" asp-route-id="@item.Id">
+                    @Html.DisplayFor(modelItem => item.DateCreated)
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Diagnosis.Patient.Person.FirstName)
+                @Html.DisplayFor(modelItem => item.Diagnosis.Patient.Person.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sponsor.Person.FirstName)
+                @Html.DisplayFor(modelItem => item.Sponsor.Person.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Appointment.Doctor.Person.FirstName)
+                @Html.DisplayFor(modelItem => item.Appointment.Doctor.Person.LastName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Diagnosis.Specialty)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Sponsor.SponsorId)
+                @Html.DisplayFor(modelItem => item.Appointment.DateAndTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Appointment.AppointmentId)
+                @Html.DisplayFor(modelItem => item.Appointment.Price)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Rating)
@@ -60,12 +84,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Active)
             </td>
-            @*<td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>*@
+            <td>
+                @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+            </td>
         </tr>
-}
+        }
     </tbody>
 </table>
