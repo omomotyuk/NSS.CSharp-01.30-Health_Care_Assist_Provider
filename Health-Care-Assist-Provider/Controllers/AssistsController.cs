@@ -25,8 +25,21 @@ namespace Health_Care_Assist_Provider.Controllers
         // GET: Assists
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Assist.Include(a => a.Appointment).Include(a => a.Diagnosis).Include(a => a.Sponsor);
-            return View(await applicationDbContext.ToListAsync());
+            //var applicationDbContext = _context.Assist.Include(a => a.Appointment).Include(a => a.Diagnosis).Include(a => a.Sponsor);
+
+            var assist = _context.Assist
+                .Include(a => a.Appointment)
+                    .ThenInclude(ad => ad.Doctor)
+                        .ThenInclude(adp => adp.Person)
+                .Include(d => d.Diagnosis)
+                    .ThenInclude(dp => dp.Patient)
+                        .ThenInclude(dpp => dpp.Person)
+                .Include(s => s.Sponsor)
+                    .ThenInclude(sp => sp.Person);
+            //.FirstOrDefaultAsync(m => m.Id == id);
+
+            return View(await assist.ToListAsync());
+            //return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Assists/Details/5
@@ -39,8 +52,12 @@ namespace Health_Care_Assist_Provider.Controllers
 
             var assist = await _context.Assist
                 .Include(a => a.Appointment)
-                .Include(a => a.Diagnosis)
-                .Include(a => a.Sponsor)
+                    .ThenInclude(ad => ad.Doctor)
+                        .ThenInclude(adp => adp.Person)
+                .Include(d => d.Diagnosis)
+                    .ThenInclude(dp => dp.Patient)
+                .Include(s => s.Sponsor)
+                    .ThenInclude(sp => sp.Person)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (assist == null)
             {
