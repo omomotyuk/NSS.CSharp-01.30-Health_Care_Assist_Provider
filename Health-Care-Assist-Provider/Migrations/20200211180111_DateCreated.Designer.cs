@@ -4,14 +4,16 @@ using Health_Care_Assist_Provider.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Health_Care_Assist_Provider.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200211180111_DateCreated")]
+    partial class DateCreated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,7 +105,7 @@ namespace Health_Care_Assist_Provider.Migrations
                         {
                             Id = "00000000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "204c721b-678a-4b84-b289-157f899c4d9b",
+                            ConcurrencyStamp = "1e659a3a-61a6-43f7-9319-62e23cf11040",
                             Email = "first.admin@hcap.org",
                             EmailConfirmed = true,
                             FirstName = "First",
@@ -111,7 +113,7 @@ namespace Health_Care_Assist_Provider.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "FIRST.ADMIN@HCAP.ORG",
                             NormalizedUserName = "FIRST.ADMIN@HCAP.ORG",
-                            PasswordHash = "AQAAAAEAACcQAAAAENBDXjDHNWThTaLHBcUbxDYuyg+T5D8ztMSXrTC3jTkH6WHWgn8wyF1CWLirRXC+Sg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJvOYOWynrnBUb5TgXiLN3ddrtcNUIAOcbquG2aWSv4TA9u6CwpsCSghj/d5UhQPUA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             StreetAddress = "123 Infinity Way",
@@ -123,7 +125,7 @@ namespace Health_Care_Assist_Provider.Migrations
                         {
                             Id = "11100000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9a39f2c9-348f-4116-b24e-05ca0a44e4e7",
+                            ConcurrencyStamp = "3e518ce4-2c31-4968-814a-fae47f32c44d",
                             Email = "p.patientson@home.net",
                             EmailConfirmed = true,
                             FirstName = "Patient",
@@ -131,7 +133,7 @@ namespace Health_Care_Assist_Provider.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "P.PATIENTSON@HOME.NET",
                             NormalizedUserName = "P.PATIENTSON@HOME.NET",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMEAnw80qKauH1uhkBLeugYCb8f7hQfNMkoUoifpF7Ds5Szx8pNumdtFGa/YUSYsRA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOToM5yj2Cmx7kS2FdbAaJzE+unOvTsV9ZOavfkuSn7y/8mq0akzY9YvrH38BTovDA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794001",
                             StreetAddress = "001 Patient Addr",
@@ -143,7 +145,7 @@ namespace Health_Care_Assist_Provider.Migrations
                         {
                             Id = "22200000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "df01748f-2182-4bc8-8e10-5dce6f3adfc9",
+                            ConcurrencyStamp = "e6f2dd92-b15a-4509-a40b-27eccf13db18",
                             Email = "d.doctorson@work.com",
                             EmailConfirmed = true,
                             FirstName = "Doctor",
@@ -151,7 +153,7 @@ namespace Health_Care_Assist_Provider.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "D.DOCTORSON@WORK.COM",
                             NormalizedUserName = "D.DOCTORSON@WORK.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENctv43XonOpKKaDsptEfAbcbB13Ef3DrTK98axWvCUMTWpGCyhpX600RCNtAOZCOw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAtomnwo/OsUisnR9jPvL+KDxHBuZTvqIJSlsI27+D6C+LmUHQaF7kOYlCSMFBVtcQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794002",
                             StreetAddress = "002 Doctor Addr",
@@ -163,7 +165,7 @@ namespace Health_Care_Assist_Provider.Migrations
                         {
                             Id = "33300000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "73d5246d-d44a-4a29-9f4e-4dff5e08e595",
+                            ConcurrencyStamp = "bcab5cd4-9c62-4948-8eb6-dcdc0d34af73",
                             Email = "s.sponsorson@fund.net",
                             EmailConfirmed = true,
                             FirstName = "Sponsor",
@@ -171,7 +173,7 @@ namespace Health_Care_Assist_Provider.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "S.SPONSORSON@FUND.ORG",
                             NormalizedUserName = "S.SPONSORSON@FUND.ORG",
-                            PasswordHash = "AQAAAAEAACcQAAAAELMoaV+tbDi0j9URosUu6X8IQK0AUCtiW+2XlagKqyWm16oPQQI3tu8wfta7743BiQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGvr9P+44t1BETUseK6pDHo1X3F+C5KHXkuwxCWFG/qUGkqo0mVHJJmpouPTVlPO9w==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794003",
                             StreetAddress = "003 Sponsor Addr",
@@ -225,9 +227,8 @@ namespace Health_Care_Assist_Provider.Migrations
                         .HasMaxLength(255);
 
                     b.Property<DateTime>("DateCreated")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("DiagnosisId")
                         .HasColumnType("int");
