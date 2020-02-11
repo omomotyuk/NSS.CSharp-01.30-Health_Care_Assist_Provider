@@ -4,6 +4,10 @@
     ViewData["Title"] = "Create";
 }
 
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
 <h1>Create</h1>
 
 <h4>Assist</h4>
@@ -12,38 +16,39 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="DateCreated" class="control-label"></label>
-                <input asp-for="DateCreated" class="form-control" />
-                <span asp-validation-for="DateCreated" class="text-danger"></span>
-            </div>
+            @*<div class="form-group invisible">*@
+            @*<div class="form-group invisible">
+                    <label asp-for="DateCreated" class="control-label"></label>
+                    <input asp-for="DateCreated" class="form-control" value="@DateTime.Now" />
+                    <span asp-validation-for="DateCreated" class="text-danger"></span>
+                </div>*@
             <div class="form-group">
                 <label asp-for="DiagnosisId" class="control-label"></label>
-                <select asp-for="DiagnosisId" class ="form-control" asp-items="ViewBag.DiagnosisId"></select>
+                <select asp-for="DiagnosisId" class="form-control" asp-items="ViewBag.DiagnosisId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="SponsorId" class="control-label"></label>
-                <select asp-for="SponsorId" class ="form-control" asp-items="ViewBag.SponsorId"></select>
+                <select asp-for="SponsorId" class="form-control" asp-items="ViewBag.SponsorId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="AppointmentId" class="control-label"></label>
-                <select asp-for="AppointmentId" class ="form-control" asp-items="ViewBag.AppointmentId"></select>
+                <select asp-for="AppointmentId" class="form-control" asp-items="ViewBag.AppointmentId"></select>
             </div>
-            <div class="form-group">
-                <label asp-for="Rating" class="control-label"></label>
-                <input asp-for="Rating" class="form-control" />
-                <span asp-validation-for="Rating" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Comment" class="control-label"></label>
-                <input asp-for="Comment" class="form-control" />
-                <span asp-validation-for="Comment" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
-                </label>
-            </div>
+            @*<div class="form-group">
+                    <label asp-for="Rating" class="control-label"></label>
+                    <input asp-for="Rating" class="form-control" />
+                    <span asp-validation-for="Rating" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Comment" class="control-label"></label>
+                    <input asp-for="Comment" class="form-control" />
+                    <span asp-validation-for="Comment" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+                    </label>
+                </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
