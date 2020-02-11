@@ -13,7 +13,6 @@ namespace Health_Care_Assist_Provider.Models
 
         [Required(ErrorMessage = "Date of registration is required")]
         [DataType(DataType.DateTime)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [Display(Name = "Date of registration")]
         public DateTime DateCreated { get; set; }
 

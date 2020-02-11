@@ -97,7 +97,7 @@ namespace Health_Care_Assist_Provider.Controllers
                 case 2:
                     {
                         var patientDiagnoses = _context.Diagnosis
-                            .Where(d => d.PatientId == patient.PatientId && d.Active == true);
+                            .Where(d => d.Active == true);
                         ViewData["DiagnosisId"] = new SelectList(await patientDiagnoses.ToListAsync(), "DiagnosisId", "Specialty");
 
                         var doctorAppointments = _context.Appointment
@@ -105,24 +105,20 @@ namespace Health_Care_Assist_Provider.Controllers
                             .Where(a => a.DoctorId == doctor.DoctorId && a.Available == true);
                         ViewData["AppointmentId"] = new SelectList(await doctorAppointments.ToListAsync(), "AppointmentId", "Doctor.Specialty");
 
-                        var sponsorFunds = _context.Sponsor
-                            .Where(s => s.CurrentDonation > 0);
-                        ViewData["SponsorId"] = new SelectList(await sponsorFunds.ToListAsync(), "SponsorId", "CurrentDonation");
+                        //var sponsorFunds = _context.Sponsor
+                        //    .Where(s => s.CurrentDonation > 0);
+                        //ViewData["SponsorId"] = new SelectList(await sponsorFunds.ToListAsync(), "SponsorId", "CurrentDonation");
                     }
                     break;
-                case 3: { } break;
+                case 3:
+                    {
+                        var patientDiagnoses = _context.Diagnosis
+                           .Where(d => d.Active == true);
+                        ViewData["DiagnosisId"] = new SelectList(await patientDiagnoses.ToListAsync(), "DiagnosisId", "Specialty");
+                    }
+                    break;
                 default: break;
             }
-
-            //var sponsor = await _context.Sponsor
-            //    .Include(p => p.Person)
-            //    .FirstOrDefaultAsync(m => m.SponsorId == id);
-
-            //if (!sponsor.Person.Id.Equals(currentUser.Id))
-            //{
-            //    TempData["ErrorMessage"] = $"Sorry {currentUser.FirstName}, you can't edit this sponsor info.";
-            //    return RedirectToAction("Index");
-            //}
 
             //ViewData["AppointmentId"] = new SelectList(_context.Appointment, "AppointmentId", "AppointmentId");
             //ViewData["DiagnosisId"] = new SelectList(_context.Diagnosis, "DiagnosisId", "Specialty");
@@ -137,12 +133,11 @@ namespace Health_Care_Assist_Provider.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,DateCreated,DiagnosisId,SponsorId,AppointmentId,Rating,Comment,Active")] Assist assist)
         {
-            assist.DateCreated = DateTime.Now;
+            //assist.DateCreated = DateTime.Now;
 
             if (ModelState.IsValid)
             {
-
-                _context.Add(assist);
+                _context.Assist.Add(assist);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
