@@ -17,58 +17,43 @@
             @Html.DisplayFor(model => model.DateCreated)
         </dd>
         <dt class="col-sm-2">
+            @Html.LabelForModel("Patients full name")
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Diagnosis.Patient.Person.FirstName)
+            @Html.DisplayFor(model => model.Diagnosis.Patient.Person.LastName)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Diagnosis)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Diagnosis.Specialty)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Diagnosis.Patient)
+            @Html.LabelForModel("Doctors full name")
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Diagnosis.Patient)
+            @Html.DisplayFor(model => model.Appointment.Doctor.Person.FirstName)
+            @Html.DisplayFor(model => model.Appointment.Doctor.Person.LastName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Sponsor)
+            @Html.DisplayNameFor(model => model.Appointment.Doctor.Specialty)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Sponsor.SponsorId)
+            @Html.DisplayFor(model => model.Appointment.Doctor.Specialty)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Sponsor.Person)
+            @Html.LabelForModel("Appointment date and time")
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Sponsor.Person)
+            @Html.DisplayFor(model => model.Appointment.DateAndTime)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Appointment)
+            @Html.LabelForModel("Sponsor full name")
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Appointment.AppointmentId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Appointment.Doctor)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Appointment.Doctor)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Appointment.Doctor.Person)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Appointment.Doctor.PersonId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Appointment.Doctor.Person)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Appointment.Doctor.Person)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Appointment.DoctorId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Appointment.DoctorId)
+            @Html.DisplayFor(model => model.Sponsor.Person.FirstName)
+            @Html.DisplayFor(model => model.Sponsor.Person.LastName)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Rating)
