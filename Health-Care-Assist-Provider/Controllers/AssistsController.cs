@@ -268,6 +268,37 @@ namespace Health_Care_Assist_Provider.Controllers
 
             if (ModelState.IsValid)
             {
+                // Diagnosis updates
+                var diagnosis = await _context.Diagnosis.FirstOrDefaultAsync(d => d.DiagnosisId == assist.DiagnosisId);
+                if (diagnosis == null)
+                {
+                    return NotFound();
+                }
+                diagnosis.Active = false;
+                _context.Diagnosis.Update(diagnosis);
+                await _context.SaveChangesAsync();
+
+                // Appointment updates
+                var appointment = await _context.Appointment.FirstOrDefaultAsync(a => a.AppointmentId == assist.AppointmentId);
+                if (appointment == null)
+                {
+                    return NotFound();
+                }
+                appointment.Available = false;
+                _context.Appointment.Update(appointment);
+                await _context.SaveChangesAsync();
+
+                // Sponsor updates
+                var sponsor = await _context.Sponsor.FirstOrDefaultAsync(s => s.SponsorId == assist.SponsorId);
+                if (sponsor == null)
+                {
+                    return NotFound();
+                }
+                sponsor.CurrentDonation = sponsor.CurrentDonation - appointment.Price;
+                _context.Sponsor.Update(sponsor);
+                await _context.SaveChangesAsync();
+
+                // Assist adding
                 _context.Assist.Add(assist);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -276,20 +307,6 @@ namespace Health_Care_Assist_Provider.Controllers
             ViewData["DiagnosisId"] = new SelectList(_context.Diagnosis, "DiagnosisId", "Specialty", assist.DiagnosisId);
             ViewData["SponsorId"] = new SelectList(_context.Sponsor, "SponsorId", "SponsorId", assist.SponsorId);
             return View(assist);
-            //
-            //var person = await GetCurrentUserAsync();
-
-            //var patient = await _context.Patient.FirstOrDefaultAsync(p => p.PersonId == person.Id);
-            //var doctor = await _context.Doctor.FirstOrDefaultAsync(p => p.PersonId == person.Id);
-            //var sponsor = await _context.Sponsor.FirstOrDefaultAsync(p => p.PersonId == person.Id);
-
-            //switch (person.UserType)
-            //{
-            //    case 1:
-            //        {
-
-            //        }
-            //}
         }
 
         // GET: Assists/Edit/5
