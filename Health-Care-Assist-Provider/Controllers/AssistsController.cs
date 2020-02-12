@@ -82,28 +82,98 @@ namespace Health_Care_Assist_Provider.Controllers
                     {
                         var patientDiagnoses = _context.Diagnosis
                             .Where(d => d.PatientId == patient.PatientId && d.Active == true);
-                        ViewData["DiagnosisId"] = new SelectList(await patientDiagnoses.ToListAsync(), "DiagnosisId", "Specialty");
+                        var selectedDiagnoses = await patientDiagnoses.ToListAsync();
+                        if (selectedDiagnoses.Count != 0)
+                        {
+                            ViewData["DiagnosisId"] = new SelectList(selectedDiagnoses, "DiagnosisId", "Specialty");
+                        }
+                        else
+                        {
+                            TempData["ErrorMessage"] = $"Sorry {patient.Person.FirstName}, you can't add new assist at this moment. There is not your diagnosis.";
+                            return RedirectToAction("Index");
+                        }
+
+                        // Get the list of the appropriate appointments
+                        List<string> specialtyList = new List<string>();
+                        string specialty = selectedDiagnoses[0].Specialty;
+                        specialtyList.Add( specialty );
 
                         var doctorAppointments = _context.Appointment
                             .Include(d => d.Doctor)
-                            .Where(a => a.Available == true);
-                        ViewData["AppointmentId"] = new SelectList(await doctorAppointments.ToListAsync(), "AppointmentId", "Doctor.Specialty");
+                            .Where(a => a.Doctor.Specialty == specialty && a.Available == true);
 
+                        var selectedAppointments = await doctorAppointments.ToListAsync();
+
+                        foreach ( Diagnosis diagnosis in selectedDiagnoses )
+                        {
+                            specialty = diagnosis.Specialty;
+
+                            if ( !specialtyList.Contains( specialty ) )
+                            {
+                                specialtyList.Add( specialty );
+
+                                doctorAppointments = _context.Appointment
+                                    .Include(d => d.Doctor)
+                                    .Where(a => a.Doctor.Specialty == specialty && a.Available == true);
+
+                                selectedAppointments.AddRange( await doctorAppointments.ToListAsync() );
+                            }
+                        }
+
+                        if (selectedAppointments.Count != 0)
+                        {
+                            ViewData["AppointmentId"] = new SelectList(selectedAppointments, "AppointmentId", "Doctor.Specialty");
+                        }
+                        else
+                        {
+                            TempData["ErrorMessage"] = $"Sorry {patient.Person.FirstName}, you can't add new assist at this moment. There is not available appointment.";
+                            return RedirectToAction("Index");
+                        }
+
+                        // Get the list of the sponsors
                         var sponsorFunds = _context.Sponsor
                             .Where(s => s.CurrentDonation > 0);
-                        ViewData["SponsorId"] = new SelectList(await sponsorFunds.ToListAsync(), "SponsorId", "CurrentDonation");
+
+                        var selectedSponsors = await sponsorFunds.ToListAsync();
+                        if (selectedSponsors.Count != 0)
+                        {
+                            ViewData["SponsorId"] = new SelectList(selectedSponsors, "SponsorId", "CurrentDonation");
+                        }
+                        else
+                        {
+                            TempData["ErrorMessage"] = $"Sorry {patient.Person.FirstName}, you can't add new assist at this moment. There is not available funds.";
+                            return RedirectToAction("Index");
+                        }
                     }
                     break;
                 case 2:
                     {
                         var patientDiagnoses = _context.Diagnosis
-                            .Where(d => d.Active == true);
-                        ViewData["DiagnosisId"] = new SelectList(await patientDiagnoses.ToListAsync(), "DiagnosisId", "Specialty");
+                            .Where(d => d.Specialty == doctor.Specialty && d.Active == true );
+                        var selectedDiagnoses = await patientDiagnoses.ToListAsync();
+                        if( selectedDiagnoses.Count != 0 )
+                        {
+                            ViewData["DiagnosisId"] = new SelectList(selectedDiagnoses, "DiagnosisId", "Specialty");
+                        }
+                        else
+                        {
+                            TempData["ErrorMessage"] = $"Sorry {doctor.Person.FirstName}, you can't add new assist at this moment. There is not your speciality cases.";
+                            return RedirectToAction("Index");
+                        }
 
                         var doctorAppointments = _context.Appointment
                             .Include(d => d.Doctor)
                             .Where(a => a.DoctorId == doctor.DoctorId && a.Available == true);
-                        ViewData["AppointmentId"] = new SelectList(await doctorAppointments.ToListAsync(), "AppointmentId", "Doctor.Specialty");
+                        var selectedAppointments = await doctorAppointments.ToListAsync();
+                        if (selectedAppointments.Count != 0)
+                        {
+                            ViewData["AppointmentId"] = new SelectList(selectedAppointments, "AppointmentId", "Doctor.Specialty");
+                        }
+                        else
+                        {
+                            TempData["ErrorMessage"] = $"Sorry {doctor.Person.FirstName}, you can't add new assist at this moment. There is not available appointment.";
+                            return RedirectToAction("Index");
+                        }
 
                         //var sponsorFunds = _context.Sponsor
                         //    .Where(s => s.CurrentDonation > 0);
