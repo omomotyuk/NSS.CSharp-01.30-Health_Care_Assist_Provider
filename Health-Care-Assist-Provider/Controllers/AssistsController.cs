@@ -316,6 +316,12 @@ namespace Health_Care_Assist_Provider.Controllers
             {
                 return NotFound();
             }
+            else
+            {
+                var person = await GetCurrentUserAsync();
+                TempData["ErrorMessage"] = $"Sorry {person.FirstName}, you can't edit this assist.";
+                return RedirectToAction("Index");
+            }
 
             var assist = await _context.Assist.FindAsync(id);
             if (assist == null)
@@ -338,6 +344,12 @@ namespace Health_Care_Assist_Provider.Controllers
             if (id != assist.Id)
             {
                 return NotFound();
+            }
+            else
+            {
+                var person = await GetCurrentUserAsync();
+                TempData["ErrorMessage"] = $"Sorry {person.FirstName}, you can't edit this assist.";
+                return RedirectToAction("Index");
             }
 
             if (ModelState.IsValid)
@@ -372,6 +384,12 @@ namespace Health_Care_Assist_Provider.Controllers
             if (id == null)
             {
                 return NotFound();
+            }
+            else
+            {
+                var person = await GetCurrentUserAsync();
+                TempData["ErrorMessage"] = $"Sorry {person.FirstName}, you can't delete this assist.";
+                return RedirectToAction("Index");
             }
 
             var assist = await _context.Assist
