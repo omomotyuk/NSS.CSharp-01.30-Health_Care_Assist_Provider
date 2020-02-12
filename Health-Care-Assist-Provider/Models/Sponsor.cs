@@ -16,9 +16,11 @@ namespace Health_Care_Assist_Provider.Models
         public ApplicationUser Person { get; set; }
 
         //[Required(ErrorMessage = "")]
+        [DataType(DataType.Currency)]
         [Display(Name = "Current Donation")]
         public float CurrentDonation { get; set; }
 
+        [DataType(DataType.Currency)]
         [Display(Name = "Total Donation")]
         public float TotalDonation { get; set; }
 

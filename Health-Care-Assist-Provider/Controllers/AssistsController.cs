@@ -59,6 +59,7 @@ namespace Health_Care_Assist_Provider.Controllers
                 .Include(s => s.Sponsor)
                     .ThenInclude(sp => sp.Person)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (assist == null)
             {
                 return NotFound();
@@ -96,7 +97,7 @@ namespace Health_Care_Assist_Provider.Controllers
                         // Get the list of the appropriate appointments
                         List<string> specialtyList = new List<string>();
                         string specialty = selectedDiagnoses[0].Specialty;
-                        specialtyList.Add( specialty );
+                        specialtyList.Add(specialty);
 
                         var doctorAppointments = _context.Appointment
                             .Include(d => d.Doctor)
@@ -104,19 +105,19 @@ namespace Health_Care_Assist_Provider.Controllers
 
                         var selectedAppointments = await doctorAppointments.ToListAsync();
 
-                        foreach ( Diagnosis diagnosis in selectedDiagnoses )
+                        foreach (Diagnosis diagnosis in selectedDiagnoses)
                         {
                             specialty = diagnosis.Specialty;
 
-                            if ( !specialtyList.Contains( specialty ) )
+                            if (!specialtyList.Contains(specialty))
                             {
-                                specialtyList.Add( specialty );
+                                specialtyList.Add(specialty);
 
                                 doctorAppointments = _context.Appointment
                                     .Include(d => d.Doctor)
                                     .Where(a => a.Doctor.Specialty == specialty && a.Available == true);
 
-                                selectedAppointments.AddRange( await doctorAppointments.ToListAsync() );
+                                selectedAppointments.AddRange(await doctorAppointments.ToListAsync());
                             }
                         }
 
@@ -149,9 +150,9 @@ namespace Health_Care_Assist_Provider.Controllers
                 case 2:
                     {
                         var patientDiagnoses = _context.Diagnosis
-                            .Where(d => d.Specialty == doctor.Specialty && d.Active == true );
+                            .Where(d => d.Specialty == doctor.Specialty && d.Active == true);
                         var selectedDiagnoses = await patientDiagnoses.ToListAsync();
-                        if( selectedDiagnoses.Count != 0 )
+                        if (selectedDiagnoses.Count != 0)
                         {
                             ViewData["DiagnosisId"] = new SelectList(selectedDiagnoses, "DiagnosisId", "Specialty");
                         }
@@ -316,22 +317,38 @@ namespace Health_Care_Assist_Provider.Controllers
             {
                 return NotFound();
             }
-            else
-            {
-                var person = await GetCurrentUserAsync();
-                TempData["ErrorMessage"] = $"Sorry {person.FirstName}, you can't edit this assist.";
-                return RedirectToAction("Index");
-            }
 
-            var assist = await _context.Assist.FindAsync(id);
+            var assist = await _context.Assist
+                .Include(a => a.Appointment)
+                    .ThenInclude(ad => ad.Doctor)
+                        .ThenInclude(adp => adp.Person)
+                .Include(d => d.Diagnosis)
+                    .ThenInclude(dp => dp.Patient)
+                .Include(s => s.Sponsor)
+                    .ThenInclude(sp => sp.Person)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
             if (assist == null)
             {
                 return NotFound();
             }
-            ViewData["AppointmentId"] = new SelectList(_context.Appointment, "AppointmentId", "AppointmentId", assist.AppointmentId);
-            ViewData["DiagnosisId"] = new SelectList(_context.Diagnosis, "DiagnosisId", "Specialty", assist.DiagnosisId);
-            ViewData["SponsorId"] = new SelectList(_context.Sponsor, "SponsorId", "SponsorId", assist.SponsorId);
-            return View(assist);
+
+            var person = await GetCurrentUserAsync();
+
+            if (assist.Appointment.DateAndTime < DateTime.Now)
+            {
+                if (assist.Diagnosis.Patient.PersonId == person.Id)
+                {
+                    ViewData["AppointmentId"] = new SelectList(_context.Appointment, "AppointmentId", "AppointmentId", assist.AppointmentId);
+                    ViewData["DiagnosisId"] = new SelectList(_context.Diagnosis, "DiagnosisId", "Specialty", assist.DiagnosisId);
+                    ViewData["SponsorId"] = new SelectList(_context.Sponsor, "SponsorId", "SponsorId", assist.SponsorId);
+
+                    return View(assist);
+                }
+            }
+
+            TempData["ErrorMessage"] = $"Sorry {person.FirstName}, you can't edit this assist.";
+            return RedirectToAction("Index");
         }
 
         // POST: Assists/Edit/5
@@ -345,23 +362,37 @@ namespace Health_Care_Assist_Provider.Controllers
             {
                 return NotFound();
             }
-            else
-            {
-                var person = await GetCurrentUserAsync();
-                TempData["ErrorMessage"] = $"Sorry {person.FirstName}, you can't edit this assist.";
-                return RedirectToAction("Index");
-            }
+            //else
+            //{
+            //    var person = await GetCurrentUserAsync();
+            //    TempData["ErrorMessage"] = $"Sorry {person.FirstName}, you can't edit this assist.";
+            //    return RedirectToAction("Index");
+            //}
+
+            var record = await _context.Assist
+                .Include(a => a.Appointment)
+                    .ThenInclude(ad => ad.Doctor)
+                        .ThenInclude(adp => adp.Person)
+                .Include(d => d.Diagnosis)
+                    .ThenInclude(dp => dp.Patient)
+                .Include(s => s.Sponsor)
+                    .ThenInclude(sp => sp.Person)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            record.Active = false;
+            record.Rating = assist.Rating;
+            record.Comment = assist.Comment;
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(assist);
+                    _context.Update(record);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AssistExists(assist.Id))
+                    if (!AssistExists(record.Id))
                     {
                         return NotFound();
                     }
@@ -372,6 +403,7 @@ namespace Health_Care_Assist_Provider.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["AppointmentId"] = new SelectList(_context.Appointment, "AppointmentId", "AppointmentId", assist.AppointmentId);
             ViewData["DiagnosisId"] = new SelectList(_context.Diagnosis, "DiagnosisId", "Specialty", assist.DiagnosisId);
             ViewData["SponsorId"] = new SelectList(_context.Sponsor, "SponsorId", "SponsorId", assist.SponsorId);
@@ -385,22 +417,47 @@ namespace Health_Care_Assist_Provider.Controllers
             {
                 return NotFound();
             }
-            else
-            {
-                var person = await GetCurrentUserAsync();
-                TempData["ErrorMessage"] = $"Sorry {person.FirstName}, you can't delete this assist.";
-                return RedirectToAction("Index");
-            }
+            //else
+            //{
+            //    var person = await GetCurrentUserAsync();
+            //    TempData["ErrorMessage"] = $"Sorry {person.FirstName}, you can't delete this assist.";
+            //    return RedirectToAction("Index");
+            //}
+
+            var person = await GetCurrentUserAsync();
 
             var assist = await _context.Assist
                 .Include(a => a.Appointment)
-                .Include(a => a.Diagnosis)
-                .Include(a => a.Sponsor)
+                    .ThenInclude(ad => ad.Doctor)
+                        .ThenInclude(adp => adp.Person)
+                .Include(d => d.Diagnosis)
+                    .ThenInclude(dp => dp.Patient)
+                .Include(s => s.Sponsor)
+                    .ThenInclude(sp => sp.Person)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (assist == null)
             {
                 return NotFound();
             }
+
+            if (assist.Appointment.DateAndTime > DateTime.Now)
+            {
+                if (assist.Diagnosis.Patient.PersonId == person.Id)
+                {
+                    //ViewData["AppointmentId"] = new SelectList(_context.Appointment, "AppointmentId", "AppointmentId", assist.AppointmentId);
+                    //ViewData["DiagnosisId"] = new SelectList(_context.Diagnosis, "DiagnosisId", "Specialty", assist.DiagnosisId);
+                    //ViewData["SponsorId"] = new SelectList(_context.Sponsor, "SponsorId", "SponsorId", assist.SponsorId);
+
+                    return View(assist);
+                }
+            }
+
+            //var assist = await _context.Assist
+            //    .Include(a => a.Appointment)
+            //    .Include(a => a.Diagnosis)
+            //    .Include(a => a.Sponsor)
+            //    .FirstOrDefaultAsync(m => m.Id == id);
 
             return View(assist);
         }
@@ -410,7 +467,48 @@ namespace Health_Care_Assist_Provider.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var assist = await _context.Assist.FindAsync(id);
+            var assist = await _context.Assist
+                .Include(a => a.Appointment)
+                    .ThenInclude(ad => ad.Doctor)
+                        .ThenInclude(adp => adp.Person)
+                .Include(d => d.Diagnosis)
+                    .ThenInclude(dp => dp.Patient)
+                .Include(s => s.Sponsor)
+                    .ThenInclude(sp => sp.Person)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            // Diagnosis updates
+            var diagnosis = await _context.Diagnosis.FirstOrDefaultAsync(d => d.DiagnosisId == assist.DiagnosisId);
+            if (diagnosis == null)
+            {
+                return NotFound();
+            }
+            diagnosis.Active = true;
+            _context.Diagnosis.Update(diagnosis);
+            await _context.SaveChangesAsync();
+
+            // Appointment updates
+            var appointment = await _context.Appointment.FirstOrDefaultAsync(a => a.AppointmentId == assist.AppointmentId);
+            if (appointment == null)
+            {
+                return NotFound();
+            }
+            appointment.Available = true;
+            _context.Appointment.Update(appointment);
+            await _context.SaveChangesAsync();
+
+            // Sponsor updates
+            var sponsor = await _context.Sponsor.FirstOrDefaultAsync(s => s.SponsorId == assist.SponsorId);
+            if (sponsor == null)
+            {
+                return NotFound();
+            }
+            sponsor.CurrentDonation = sponsor.CurrentDonation + appointment.Price;
+            _context.Sponsor.Update(sponsor);
+            await _context.SaveChangesAsync();
+
+            // Assist deleting
+            //var assist = await _context.Assist.FindAsync(id);
             _context.Assist.Remove(assist);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
