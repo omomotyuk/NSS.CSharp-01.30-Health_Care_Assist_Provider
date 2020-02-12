@@ -4,6 +4,8 @@
     ViewData["Title"] = "Index";
 }
 
+<h2 class="alert-danger">@TempData["ErrorMessage"]</h2>
+
 <h1>Assists</h1>
 
 <p>
@@ -48,48 +50,48 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                <a asp-controller="Assists" asp-action="Details" asp-route-id="@item.Id">
-                    @Html.DisplayFor(modelItem => item.DateCreated)
-                </a>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Diagnosis.Patient.Person.FirstName)
-                @Html.DisplayFor(modelItem => item.Diagnosis.Patient.Person.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sponsor.Person.FirstName)
-                @Html.DisplayFor(modelItem => item.Sponsor.Person.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Appointment.Doctor.Person.FirstName)
-                @Html.DisplayFor(modelItem => item.Appointment.Doctor.Person.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Diagnosis.Specialty)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Appointment.DateAndTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Appointment.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Comment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Active)
-            </td>
-            <td>
-                @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    <a asp-controller="Assists" asp-action="Details" asp-route-id="@item.Id">
+                        @Html.DisplayFor(modelItem => item.DateCreated)
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Diagnosis.Patient.Person.FirstName)
+                    @Html.DisplayFor(modelItem => item.Diagnosis.Patient.Person.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sponsor.Person.FirstName)
+                    @Html.DisplayFor(modelItem => item.Sponsor.Person.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Appointment.Doctor.Person.FirstName)
+                    @Html.DisplayFor(modelItem => item.Appointment.Doctor.Person.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Diagnosis.Specialty)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Appointment.DateAndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Appointment.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comment)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Active)
+                </td>
+                <td>
+                    @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                </td>
+            </tr>
         }
     </tbody>
 </table>

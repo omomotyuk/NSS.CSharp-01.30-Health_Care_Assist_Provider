@@ -18,13 +18,16 @@
                 @Html.LabelForModel("Full name")
             </th>
             @*<th>
-                    @Html.DisplayNameFor(model => model.Person)
-                </th>*@
+            @Html.DisplayNameFor(model => model.Person)
+        </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.DateOfBirth)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Diagnoses)
+                @Html.DisplayNameFor(model => model.Diagnoses.ToList()[0].Specialty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Diagnoses.ToList()[0].Active)
             </th>
             <th></th>
         </tr>
@@ -40,33 +43,37 @@
             {
                 @foreach (var diagnosis in patient.Diagnoses)
                 {
-                    <tr>
-                        <td>
-                            <a asp-controller="Patients" asp-action="Details" asp-route-id="@patient.PatientId">
-                                @Html.DisplayFor(modelItem => patient.Person.FirstName)
-                                @Html.DisplayFor(modelItem => patient.Person.LastName)
-                            </a>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => patient.DateOfBirth)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => diagnosis.Specialty)
-                        </td>
-                        @if (UserManager.GetUserId(User) == patient.Person.Id)
-                        {
-                            <td><a asp-controller="Diagnoses" asp-action="Create" asp-route-id="@patient.PatientId">Add Diagnosis</a></td>
-                        }
-                        else
-                        {
-                            <td></td>
-                        }
-                        @*<td>
-                                <a asp-action="Edit" asp-route-id="@patient.PatientId">Edit</a> |
-                                <a asp-action="Details" asp-route-id="@patient.PatientId">Details</a> |
-                                <a asp-action="Delete" asp-route-id="@patient.PatientId">Delete</a>
-                            </td>*@
-                    </tr>
+        <tr>
+            <td>
+                <a asp-controller="Patients" asp-action="Details" asp-route-id="@patient.PatientId">
+                    @Html.DisplayFor(modelItem => patient.Person.FirstName)
+                    @Html.DisplayFor(modelItem => patient.Person.LastName)
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => patient.DateOfBirth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => diagnosis.Specialty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => diagnosis.Active)
+            </td>
+
+            @if (UserManager.GetUserId(User) == patient.Person.Id)
+            {
+                <td><a asp-controller="Diagnoses" asp-action="Create" asp-route-id="@patient.PatientId">Add Diagnosis</a></td>
+            }
+            else
+            {
+                <td></td>
+            }
+            @*<td>
+            <a asp-action="Edit" asp-route-id="@patient.PatientId">Edit</a> |
+            <a asp-action="Details" asp-route-id="@patient.PatientId">Details</a> |
+            <a asp-action="Delete" asp-route-id="@patient.PatientId">Delete</a>
+        </td>*@
+        </tr>
                 }
             }
             else
