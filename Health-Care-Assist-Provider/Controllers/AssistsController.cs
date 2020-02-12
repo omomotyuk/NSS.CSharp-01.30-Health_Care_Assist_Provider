@@ -56,6 +56,7 @@ namespace Health_Care_Assist_Provider.Controllers
                         .ThenInclude(adp => adp.Person)
                 .Include(d => d.Diagnosis)
                     .ThenInclude(dp => dp.Patient)
+                         .ThenInclude(dpp => dpp.Person)
                 .Include(s => s.Sponsor)
                     .ThenInclude(sp => sp.Person)
                 .FirstOrDefaultAsync(m => m.Id == id);
