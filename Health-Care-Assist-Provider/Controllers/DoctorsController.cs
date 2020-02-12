@@ -65,6 +65,11 @@ namespace Health_Care_Assist_Provider.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DoctorId,PersonId,Specialty,LicenseNumber,Rating")] Doctor doctor)
         {
+            var currentUser = await GetCurrentUserAsync();
+
+            doctor.PersonId = currentUser.Id;
+            doctor.Rating = 0;
+
             if (ModelState.IsValid)
             {
                 _context.Add(doctor);

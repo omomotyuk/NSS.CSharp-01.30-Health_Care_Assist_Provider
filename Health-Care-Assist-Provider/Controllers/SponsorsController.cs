@@ -65,6 +65,12 @@ namespace Health_Care_Assist_Provider.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("SponsorId,PersonId,CurrentDonation,TotalDonation,TotalAssists")] Sponsor sponsor)
         {
+            var currentUser = await GetCurrentUserAsync();
+
+            sponsor.PersonId = currentUser.Id;
+            sponsor.TotalDonation = 0;
+            sponsor.TotalAssists = 0;
+
             if (ModelState.IsValid)
             {
                 _context.Add(sponsor);
