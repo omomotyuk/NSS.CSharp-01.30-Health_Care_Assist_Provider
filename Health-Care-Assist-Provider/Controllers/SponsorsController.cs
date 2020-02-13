@@ -123,6 +123,10 @@ namespace Health_Care_Assist_Provider.Controllers
                 return NotFound();
             }
 
+            var currentUser = await GetCurrentUserAsync();
+
+            sponsor.PersonId = currentUser.Id;
+
             if (ModelState.IsValid)
             {
                 try
