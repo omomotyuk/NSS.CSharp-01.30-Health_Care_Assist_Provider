@@ -25,9 +25,29 @@ namespace Health_Care_Assist_Provider.Controllers
         // GET: Patients
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Patient
-                .Include(p => p.Person)
-                .Include(p => p.Diagnoses);
+            var currentUser = await GetCurrentUserAsync();
+
+            //var applicationDbContext = _context.Patient.Select(p => p.PersonId == currentUser.Id);
+            var applicationDbContext = _context.Patient.Where(p => p.PersonId == currentUser.Id);
+
+            switch (currentUser.UserType)
+            {
+                case 1:
+                    {
+                        applicationDbContext = _context.Patient
+                            .Include(p => p.Person)
+                            .Include(p => p.Diagnoses)
+                            .Where(p => p.PersonId == currentUser.Id);
+                    }
+                    break;
+                default:
+                    {
+                        applicationDbContext = _context.Patient
+                           .Include(p => p.Person)
+                           .Include(p => p.Diagnoses);
+                    }
+                    break;
+            }
 
             return View(await applicationDbContext.ToListAsync());
         }
