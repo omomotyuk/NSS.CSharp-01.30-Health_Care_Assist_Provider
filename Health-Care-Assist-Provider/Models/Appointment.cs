@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Health_Care_Assist_Provider.Models
 {
-    public class Appointment
+    public class Appointment : IValidatableObject
     {
         [Required]
         [Display(Name = "Appointment Id")]
@@ -35,5 +35,24 @@ namespace Health_Care_Assist_Provider.Models
 
         //[Required(ErrorMessage = "Appointment status is required")]
         public bool Available { get; set; } = true;
+
+        //
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            List<ValidationResult> results = new List<ValidationResult>();
+
+            if (DateAndTime < DateTime.Now.AddDays(1))
+            {
+                results.Add(new ValidationResult("Start date and time must be at least 24 hours in advance from now", new[] { "DateAndTime" }));
+            }
+
+            //if (EndDateTime <= StartDateTime)
+            //{
+            //    results.Add(new ValidationResult("EndDateTime must be greater that StartDateTime", new[] { "EndDateTime" }));
+            //}
+
+            return results;
+        }
+
     }
 }
