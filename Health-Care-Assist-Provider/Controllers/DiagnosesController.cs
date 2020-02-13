@@ -94,11 +94,23 @@ namespace Health_Care_Assist_Provider.Controllers
                 return NotFound();
             }
 
-            var diagnosis = await _context.Diagnosis.FindAsync(id);
+            var diagnosis = await _context.Diagnosis
+                .Include(d => d.Patient)
+                .FirstOrDefaultAsync(d => d.DiagnosisId == id);
+
             if (diagnosis == null)
             {
                 return NotFound();
             }
+
+            var currentUser = await GetCurrentUserAsync();
+
+            if (!diagnosis.Patient.PersonId.Equals(currentUser.Id))
+            {
+                TempData["ErrorMessage"] = $"Sorry {currentUser.FirstName}, you can't edit this diagnosis info.";
+                return RedirectToAction("Index");
+            }
+
             ViewData["PatientId"] = new SelectList(_context.Patient, "PatientId", "PatientId", diagnosis.PatientId);
             return View(diagnosis);
         }
@@ -150,9 +162,17 @@ namespace Health_Care_Assist_Provider.Controllers
             var diagnosis = await _context.Diagnosis
                 .Include(d => d.Patient)
                 .FirstOrDefaultAsync(m => m.DiagnosisId == id);
+
             if (diagnosis == null)
             {
                 return NotFound();
+            }
+            var currentUser = await GetCurrentUserAsync();
+
+            if (!diagnosis.Patient.PersonId.Equals(currentUser.Id))
+            {
+                TempData["ErrorMessage"] = $"Sorry {currentUser.FirstName}, you can't delete this diagnosis info.";
+                return RedirectToAction("Index");
             }
 
             return View(diagnosis);

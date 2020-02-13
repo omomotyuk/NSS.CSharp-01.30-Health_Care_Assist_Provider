@@ -9,6 +9,29 @@
 }
 
 @{
+    var UserTypes = new List<SelectListItem> {
+        new SelectListItem{ Value = " 1", Text = "Patient" },
+        new SelectListItem{ Value = "2", Text = "Doctor" },
+        new SelectListItem{ Value = "3", Text = "Sponsor" }
+   };
+}
+
+@{
+    var Specialties = new List<SelectListItem>
+    {
+        new SelectListItem{ Value = "Allergy and immunology", Text = "Allergy and immunology" },
+        new SelectListItem{ Value = "Pediatrics", Text = "Pediatrics" },
+        new SelectListItem{ Value = "Family Medicine", Text = "Family Medicine" },
+        new SelectListItem{ Value = "General surgery", Text = "General surgery" },
+        new SelectListItem{ Value = "Psychiatry", Text = "Psychiatry" },
+        new SelectListItem{ Value = "Neurology", Text = "Neurology" },
+        new SelectListItem{ Value = "Radiology", Text = "Radiology" },
+        new SelectListItem{ Value = "Dermatology", Text = "Dermatology" },
+        new SelectListItem{ Value = "Cardiology", Text = "Cardiology" }
+    };
+}
+
+@{
     ViewData["Title"] = "Create";
 }
 
@@ -25,40 +48,41 @@
         @Html.LabelForModel(CurrentUser.LastName)
     </dd>
 </dl>
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                @*<div class="form-group">
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div class="form-group">
                     <label asp-for="PersonId" class="control-label"></label>
                     <select asp-for="PersonId" class="form-control" asp-items="ViewBag.PersonId"></select>
                 </div>*@
-                <div class="form-group">
-                    <label asp-for="Specialty" class="control-label"></label>
-                    <input asp-for="Specialty" class="form-control" />
-                    <span asp-validation-for="Specialty" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="LicenseNumber" class="control-label"></label>
-                    <input asp-for="LicenseNumber" class="form-control" />
-                    <span asp-validation-for="LicenseNumber" class="text-danger"></span>
-                </div>
-                @*<div class="form-group">
+        <div class="form-group">
+            <label asp-for="Specialty" class="control-label"></label>
+            @*<input asp-for="Specialty" class="form-control" />*@
+            <select asp-for="Specialty" asp-items="@Specialties"></select>
+            <span asp-validation-for="Specialty" class="text-danger"></span>
+        </div>
+            <div class="form-group">
+                <label asp-for="LicenseNumber" class="control-label"></label>
+                <input asp-for="LicenseNumber" class="form-control" />
+                <span asp-validation-for="LicenseNumber" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
                     <label asp-for="Rating" class="control-label"></label>
                     <input asp-for="Rating" class="form-control" />
                     <span asp-validation-for="Rating" class="text-danger"></span>
                 </div>*@
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
+</div>
 
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
 
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

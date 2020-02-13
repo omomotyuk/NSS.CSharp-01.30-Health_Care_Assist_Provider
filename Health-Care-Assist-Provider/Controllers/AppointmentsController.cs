@@ -84,11 +84,23 @@ namespace Health_Care_Assist_Provider.Controllers
                 return NotFound();
             }
 
-            var appointment = await _context.Appointment.FindAsync(id);
+            var appointment = await _context.Appointment
+                .Include(d => d.Doctor)
+                .FirstOrDefaultAsync(d => d.AppointmentId == id);
+
             if (appointment == null)
             {
                 return NotFound();
             }
+
+            var currentUser = await GetCurrentUserAsync();
+
+            if (!appointment.Doctor.PersonId.Equals(currentUser.Id))
+            {
+                TempData["ErrorMessage"] = $"Sorry {currentUser.FirstName}, you can't edit this appointment info.";
+                return RedirectToAction("Index");
+            }
+
             ViewData["DoctorId"] = new SelectList(_context.Doctor, "DoctorId", "LicenseNumber", appointment.DoctorId);
             return View(appointment);
         }
@@ -140,9 +152,18 @@ namespace Health_Care_Assist_Provider.Controllers
             var appointment = await _context.Appointment
                 .Include(a => a.Doctor)
                 .FirstOrDefaultAsync(m => m.AppointmentId == id);
+
             if (appointment == null)
             {
                 return NotFound();
+            }
+
+            var currentUser = await GetCurrentUserAsync();
+
+            if (!appointment.Doctor.PersonId.Equals(currentUser.Id))
+            {
+                TempData["ErrorMessage"] = $"Sorry {currentUser.FirstName}, you can't delete this appointment info.";
+                return RedirectToAction("Index");
             }
 
             return View(appointment);
