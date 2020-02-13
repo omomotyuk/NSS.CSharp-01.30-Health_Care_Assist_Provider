@@ -297,6 +297,9 @@ namespace Health_Care_Assist_Provider.Controllers
                     return NotFound();
                 }
                 sponsor.CurrentDonation = sponsor.CurrentDonation - appointment.Price;
+                sponsor.TotalDonation = sponsor.TotalDonation + appointment.Price;
+                sponsor.TotalAssists = sponsor.TotalAssists + 1;
+
                 _context.Sponsor.Update(sponsor);
                 await _context.SaveChangesAsync();
 
@@ -505,6 +508,9 @@ namespace Health_Care_Assist_Provider.Controllers
                 return NotFound();
             }
             sponsor.CurrentDonation = sponsor.CurrentDonation + appointment.Price;
+            sponsor.TotalDonation = sponsor.TotalDonation - appointment.Price;
+            sponsor.TotalAssists = sponsor.TotalAssists - 1;
+            
             _context.Sponsor.Update(sponsor);
             await _context.SaveChangesAsync();
 

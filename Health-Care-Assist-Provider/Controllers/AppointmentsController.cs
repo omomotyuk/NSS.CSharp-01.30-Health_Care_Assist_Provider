@@ -70,7 +70,7 @@ namespace Health_Care_Assist_Provider.Controllers
             {
                 _context.Add(appointment);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Doctors");
             }
             ViewData["DoctorId"] = new SelectList(_context.Doctor, "DoctorId", "LicenseNumber", appointment.DoctorId);
             return View(appointment);
@@ -177,7 +177,7 @@ namespace Health_Care_Assist_Provider.Controllers
             var appointment = await _context.Appointment.FindAsync(id);
             _context.Appointment.Remove(appointment);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Doctors");
         }
 
         private bool AppointmentExists(int id)
