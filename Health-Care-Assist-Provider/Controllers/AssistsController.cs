@@ -91,7 +91,7 @@ namespace Health_Care_Assist_Provider.Controllers
                         }
                         else
                         {
-                            TempData["ErrorMessage"] = $"Sorry {patient.Person.FirstName}, you can't add new assist at this moment. There is not your diagnosis.";
+                            TempData["ErrorMessage"] = $"Sorry {patient.Person.FirstName}, you can't add new assist at this moment. There is no your diagnosis.";
                             return RedirectToAction("Index");
                         }
 
@@ -128,7 +128,7 @@ namespace Health_Care_Assist_Provider.Controllers
                         }
                         else
                         {
-                            TempData["ErrorMessage"] = $"Sorry {patient.Person.FirstName}, you can't add new assist at this moment. There is not available appointment.";
+                            TempData["ErrorMessage"] = $"Sorry {patient.Person.FirstName}, you can't add new assist at this moment. There is no available appointment.";
                             return RedirectToAction("Index");
                         }
 
@@ -143,7 +143,7 @@ namespace Health_Care_Assist_Provider.Controllers
                         }
                         else
                         {
-                            TempData["ErrorMessage"] = $"Sorry {patient.Person.FirstName}, you can't add new assist at this moment. There is not available funds.";
+                            TempData["ErrorMessage"] = $"Sorry {patient.Person.FirstName}, you can't add new assist at this moment. There are no available funds.";
                             return RedirectToAction("Index");
                         }
                     }
@@ -159,7 +159,7 @@ namespace Health_Care_Assist_Provider.Controllers
                         }
                         else
                         {
-                            TempData["ErrorMessage"] = $"Sorry {doctor.Person.FirstName}, you can't add new assist at this moment. There is not your speciality cases.";
+                            TempData["ErrorMessage"] = $"Sorry {doctor.Person.FirstName}, you can't add new assist at this moment. There are no your speciality cases.";
                             return RedirectToAction("Index");
                         }
 
@@ -173,7 +173,7 @@ namespace Health_Care_Assist_Provider.Controllers
                         }
                         else
                         {
-                            TempData["ErrorMessage"] = $"Sorry {doctor.Person.FirstName}, you can't add new assist at this moment. There is not available appointment.";
+                            TempData["ErrorMessage"] = $"Sorry {doctor.Person.FirstName}, you can't add new assist at this moment. There is no available appointment.";
                             return RedirectToAction("Index");
                         }
 
@@ -193,7 +193,7 @@ namespace Health_Care_Assist_Provider.Controllers
                         }
                         else
                         {
-                            TempData["ErrorMessage"] = $"Sorry {sponsor.Person.FirstName}, you can't add new assist at this moment. There is not diagnoses.";
+                            TempData["ErrorMessage"] = $"Sorry {sponsor.Person.FirstName}, you can't add new assist at this moment. There are no diagnoses.";
                             return RedirectToAction("Index");
                         }
 
@@ -230,7 +230,7 @@ namespace Health_Care_Assist_Provider.Controllers
                         }
                         else
                         {
-                            TempData["ErrorMessage"] = $"Sorry {sponsor.Person.FirstName}, you can't add new assist at this moment. There is not available appointment.";
+                            TempData["ErrorMessage"] = $"Sorry {sponsor.Person.FirstName}, you can't add new assist at this moment. There is no available appointment.";
                             return RedirectToAction("Index");
                         }
 
@@ -245,7 +245,7 @@ namespace Health_Care_Assist_Provider.Controllers
                         }
                         else
                         {
-                            TempData["ErrorMessage"] = $"Sorry {sponsor.Person.FirstName}, you can't add new assist at this moment. There is not available funds.";
+                            TempData["ErrorMessage"] = $"Sorry {sponsor.Person.FirstName}, you can't add new assist at this moment. There are no available funds.";
                             return RedirectToAction("Index");
                         }
                     }
@@ -297,6 +297,9 @@ namespace Health_Care_Assist_Provider.Controllers
                     return NotFound();
                 }
                 sponsor.CurrentDonation = sponsor.CurrentDonation - appointment.Price;
+                sponsor.TotalDonation = sponsor.TotalDonation + appointment.Price;
+                sponsor.TotalAssists = sponsor.TotalAssists + 1;
+
                 _context.Sponsor.Update(sponsor);
                 await _context.SaveChangesAsync();
 
@@ -505,6 +508,9 @@ namespace Health_Care_Assist_Provider.Controllers
                 return NotFound();
             }
             sponsor.CurrentDonation = sponsor.CurrentDonation + appointment.Price;
+            sponsor.TotalDonation = sponsor.TotalDonation - appointment.Price;
+            sponsor.TotalAssists = sponsor.TotalAssists - 1;
+            
             _context.Sponsor.Update(sponsor);
             await _context.SaveChangesAsync();
 
