@@ -19,7 +19,7 @@ The application creates a connection between people who cannot afford health ins
 
 ## MVP Definition: 
 * User-specific CRUD for tree type of users: Patient, Doctor, and Sponsor
-* User-specific lists of the Patient, Doctor, and Sponsor
+* User-specific lists of the Patients, Doctors, and Sponsors
 * Ability for the Patient to create a Diagnosis request
 * Ability for the Patient to schedule an Appointment when appropriate date-time and aids funds are available
 * Ability for the Patient to rate the Appointment and to comment it
@@ -32,15 +32,15 @@ The application creates a connection between people who cannot afford health ins
 ## User Stories
 
 1. User should be able to create an account
-When the user clicks on the Register link
-Then the following input fields should be presented:
+	When the user clicks on the Register link
+	Then the following input fields should be presented:
 - List of types of the User account to choose from (drop-down select menu)
 - the e-mail address
 - the password and password confirmation
 
 2. User should be asked to provide required account information
-When the user is logged in for the first time
-Then a form should be displayed in which the following information can be entered:
+	When the user is logged in for the first time
+	Then a form should be displayed in which the following information can be entered:
 
 for all type of users:
 - First name and Last name
@@ -55,70 +55,70 @@ for Doctor account type:
 - valid license number
 
 3. Given a Patient wants to view a list of available Appointments for specific Speciality
-When the Patient clicks on the Doctors item in the navigation bar
-Then all Doctors of specific Speciality with available Appointments should be listed with the following information:
+	When the Patient clicks on the Doctors item in the navigation bar
+	Then all Doctors of specific Speciality with available Appointments should be listed with the following information:
 - First name and last name
 - Specialty
 - Doctors rating
 - Date and Time, available to schedule appointment
 
 4. Given a Patient wants to view detailed information on a particular Doctor
-When the Patient clicks on the Doctors name from the list, presented in Doctors section
-Then the Detailed information about Doctors should be presented.
+	When the Patient clicks on the Doctors name from the list, presented in Doctors section
+	Then the Detailed information about Doctors should be presented.
 
 5. Given a Patient wants to check a sum of available aids provided from Sponsor
-When the Patient clicks on the Sponsor item in the navigation bar
-Then the list of all Sponsors with available aids money at the moment should be presented with the information:
+	When the Patient clicks on the Sponsor item in the navigation bar
+	Then the list of all Sponsors with available aids money at the moment should be presented with the information:
 - First name and last name
 - Sum of money for aids available at the moment
 
 6. Given a Patient wants to schedule an appointment
-When the Patient clicks on the Appointment item in the navigation bar
-Then the following information should be presented:
+	When the Patient clicks on the Appointment item in the navigation bar
+	Then the following information should be presented:
 - the Patients own First name and last name
 - Specialty needed based on Diagnosis provided
 - List of Doctors to choose from (drop-down select menu)
 - List of available Date and Time to schedule appointment (drop-down select menu)
 - List of Sponsors, who provide enough money to pay for appointment (drop-down select menu)
-And then clicks on the Submit button
-Then the DiagnosesAppointment item should be created
+	And then clicks on the Submit button
+	Then the DiagnosesAppointment item should be created
 
 7. The Doctor should be able to provide an appointment information
-Given a Doctor wants to provide an Appointment related information
-When the Doctor clicks on the Create Appointment button
-Then a form should be displayed in which the following information can be entered:
+	Given a Doctor wants to provide an Appointment related information
+	When the Doctor clicks on the Create Appointment button
+	Then a form should be displayed in which the following information can be entered:
 - new Appointment date and time
 - a required Appointment charge sum
 
 8. The Doctor should be able to schedule a free of charge appointment
-Given a Doctor wants to schedule a free of charge appointment for a particular Patient
-When the Doctor clicks on Name of Patient in the presented list
-Then the following information should be presented:
+	Given a Doctor wants to schedule a free of charge appointment for a particular Patient
+	When the Doctor clicks on Name of Patient in the presented list
+	Then the following information should be presented:
 - the Patients own First name and last name
 - Specialty needed based on Diagnosis provided
 - List of available Date and Time to schedule an appointment (drop-down select menu)
 - And then clicks on the Submit button
-Then the DiagnosesAppointment item should be created
+	Then the DiagnosesAppointment item should be created
 
 9. The Sponsor should be able to update the sum of donation
-Given the Sponsor wants to update the sum of donation
-When the Sponsor clicks on her name in the list
-Then the detailed information should be presented with an input field for the sum of donation.
+	Given the Sponsor wants to update the sum of donation
+	When the Sponsor clicks on her name in the list
+	Then the detailed information should be presented with an input field for the sum of donation.
 
 10. The Sponsor should be able to schedule an appointment
-Given a Sponsor wants to schedule an appointment for a particular Patient
-When the Sponsor clicks on Name of Patient in the presented list
-Then the following information should be presented:
+	Given a Sponsor wants to schedule an appointment for a particular Patient
+	When the Sponsor clicks on Name of Patient in the presented list
+	Then the following information should be presented:
 - the Patients own First name and last name
 - Specialty needed based on Diagnosis provided
 - List of Doctors to choose from (drop-down select menu)
 - List of available Date and Time to schedule an appointment (drop-down select menu)
 - And then clicks on the Submit button
-Then the DiagnosesAppointment item should be created
+	Then the DiagnosesAppointment item should be created
 
 11. Given a Patient wants to add a comment for appointment
-When the Patient clicks on the Appointment item in the navigation bar
-Then the list of Appointments should be presented with the Add comment button.
+	When the Patient clicks on the Appointment item in the navigation bar
+	Then the list of Appointments should be presented with the Add comment button.
 
 
 ## ERD:
