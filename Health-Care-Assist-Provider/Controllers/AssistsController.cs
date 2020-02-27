@@ -387,6 +387,26 @@ namespace Health_Care_Assist_Provider.Controllers
             record.Rating = assist.Rating;
             record.Comment = assist.Comment;
 
+            // Doctor rating updates
+            var doctorId = record.Appointment.DoctorId;
+
+            var doctorRating = await _context.Assist
+                .Include(a => a.Appointment)
+                    .ThenInclude(ad => ad.Doctor)
+                .Where(ad => ad.Appointment.Doctor.DoctorId == doctorId)
+                .AverageAsync(a => a.Rating);
+
+            var doctor = await _context.Doctor.FirstOrDefaultAsync(s => s.DoctorId == doctorId);
+            if (doctor == null)
+            {
+                return NotFound();
+            }
+            doctor.Rating = doctorRating;
+
+            _context.Doctor.Update(doctor);
+            await _context.SaveChangesAsync();
+            //
+
             if (ModelState.IsValid)
             {
                 try

@@ -80,7 +80,6 @@ namespace Health_Care_Assist_Provider.Controllers
             {
                 _context.Add(diagnosis);
                 await _context.SaveChangesAsync();
-                //return RedirectToAction(nameof(Index));
                 return RedirectToAction("Index","Patients");
             }
             ViewData["PatientId"] = new SelectList(_context.Patient, "PatientId", "PatientId", diagnosis.PatientId);
