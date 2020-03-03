@@ -78,6 +78,8 @@ namespace Health_Care_Assist_Provider.Controllers
             var doctor = await _context.Doctor.FirstOrDefaultAsync(p => p.PersonId == person.Id);
             var sponsor = await _context.Sponsor.FirstOrDefaultAsync(p => p.PersonId == person.Id);
 
+            //DateTime dateTime = new DateTime();
+
             switch (person.UserType)
             {
                 case 1:
@@ -102,7 +104,7 @@ namespace Health_Care_Assist_Provider.Controllers
 
                         var doctorAppointments = _context.Appointment
                             .Include(d => d.Doctor)
-                            .Where(a => a.Doctor.Specialty == specialty && a.Available == true);
+                            .Where(a => a.Doctor.Specialty == specialty && a.DateAndTime > DateTime.Now && a.Available == true);
 
                         var selectedAppointments = await doctorAppointments.ToListAsync();
 
@@ -116,7 +118,7 @@ namespace Health_Care_Assist_Provider.Controllers
 
                                 doctorAppointments = _context.Appointment
                                     .Include(d => d.Doctor)
-                                    .Where(a => a.Doctor.Specialty == specialty && a.Available == true);
+                                    .Where(a => a.Doctor.Specialty == specialty && a.DateAndTime > DateTime.Now && a.Available == true);
 
                                 selectedAppointments.AddRange(await doctorAppointments.ToListAsync());
                             }
@@ -165,7 +167,7 @@ namespace Health_Care_Assist_Provider.Controllers
 
                         var doctorAppointments = _context.Appointment
                             .Include(d => d.Doctor)
-                            .Where(a => a.DoctorId == doctor.DoctorId && a.Available == true);
+                            .Where(a => a.DoctorId == doctor.DoctorId && a.DateAndTime > DateTime.Now && a.Available == true);
                         var selectedAppointments = await doctorAppointments.ToListAsync();
                         if (selectedAppointments.Count != 0)
                         {
@@ -204,7 +206,7 @@ namespace Health_Care_Assist_Provider.Controllers
 
                         var doctorAppointments = _context.Appointment
                             .Include(d => d.Doctor)
-                            .Where(a => a.Doctor.Specialty == specialty && a.Available == true);
+                            .Where(a => a.Doctor.Specialty == specialty && a.DateAndTime > DateTime.Now && a.Available == true);
 
                         var selectedAppointments = await doctorAppointments.ToListAsync();
 
@@ -218,7 +220,7 @@ namespace Health_Care_Assist_Provider.Controllers
 
                                 doctorAppointments = _context.Appointment
                                     .Include(d => d.Doctor)
-                                    .Where(a => a.Doctor.Specialty == specialty && a.Available == true);
+                                    .Where(a => a.Doctor.Specialty == specialty && a.DateAndTime > DateTime.Now && a.Available == true);
 
                                 selectedAppointments.AddRange(await doctorAppointments.ToListAsync());
                             }

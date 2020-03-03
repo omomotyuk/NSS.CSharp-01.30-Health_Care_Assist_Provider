@@ -56,53 +56,56 @@
             {
                 @foreach (var appointment in doctor.Appointments)
                 {
-                    <tr>
-                        <td>
-                            <a asp-controller="Doctors" asp-action="Details" asp-route-id="@doctor.DoctorId">
-                                @Html.DisplayFor(modelItem => doctor.Person.FirstName)
-                                @Html.DisplayFor(modelItem => doctor.Person.LastName)
-                            </a>
-                        </td>
-                        @*<td>
-                                @Html.DisplayFor(modelItem => doctor.Person.FirstName)
+                    @if (appointment.DateAndTime > DateTime.Now)
+                    {
+                        <tr>
+                            <td>
+                                <a asp-controller="Doctors" asp-action="Details" asp-route-id="@doctor.DoctorId">
+                                    @Html.DisplayFor(modelItem => doctor.Person.FirstName)
+                                    @Html.DisplayFor(modelItem => doctor.Person.LastName)
+                                </a>
+                            </td>
+                            @*<td>
+                                    @Html.DisplayFor(modelItem => doctor.Person.FirstName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => doctor.Person.LastName)
+                                </td>*@
+                            <td>
+                                @Html.DisplayFor(modelItem => doctor.Specialty)
+                            </td>
+                            @*<td>
+                                    @Html.DisplayFor(modelItem => doctor.LicenseNumber)
+                                </td>*@
+                            <td>
+                                @Html.DisplayFor(modelItem => doctor.Rating)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => doctor.Person.LastName)
-                            </td>*@
-                        <td>
-                            @Html.DisplayFor(modelItem => doctor.Specialty)
-                        </td>
-                        @*<td>
-                                @Html.DisplayFor(modelItem => doctor.LicenseNumber)
-                            </td>*@
-                        <td>
-                            @Html.DisplayFor(modelItem => doctor.Rating)
-                        </td>
-                        <td>
-                            <a asp-controller="Appointments" asp-action="Details" asp-route-id="@appointment.AppointmentId">
-                                @Html.DisplayFor(modelItem => appointment.DateAndTime)
-                            </a>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => appointment.Price)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => appointment.Available)
-                        </td>
-                        @if (UserManager.GetUserId(User) == doctor.Person.Id)
-                        {
-                            <td><a asp-controller="Appointments" asp-action="Create" asp-route-id="@doctor.DoctorId">Add Appointment</a></td>
-                        }
-                        else
-                        {
-                            <td></td>
-                        }
-                        @*<td>
-                                <a asp-action="Edit" asp-route-id="@doctor.DoctorId">Edit</a> |
-                                <a asp-action="Details" asp-route-id="@doctor.DoctorId">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@doctor.DoctorId">Delete</a>
-                            </td>*@
-                    </tr>
+                                <a asp-controller="Appointments" asp-action="Details" asp-route-id="@appointment.AppointmentId">
+                                    @Html.DisplayFor(modelItem => appointment.DateAndTime)
+                                </a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => appointment.Price)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => appointment.Available)
+                            </td>
+                            @if (UserManager.GetUserId(User) == doctor.Person.Id)
+                            {
+                                <td><a asp-controller="Appointments" asp-action="Create" asp-route-id="@doctor.DoctorId">Add Appointment</a></td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+                            @*<td>
+                                    <a asp-action="Edit" asp-route-id="@doctor.DoctorId">Edit</a> |
+                                    <a asp-action="Details" asp-route-id="@doctor.DoctorId">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@doctor.DoctorId">Delete</a>
+                                </td>*@
+                        </tr>
+                    }
                 }
             }
             else
