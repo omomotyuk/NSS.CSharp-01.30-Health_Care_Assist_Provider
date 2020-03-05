@@ -50,6 +50,10 @@
         @inject SignInManager<ApplicationUser> SignInManager
         @inject UserManager<ApplicationUser> UserManager
 
+        @{
+            var CurrentUser = await UserManager.GetUserAsync(User);
+        }
+
         @foreach (var doctor in Model)
         {
             @if (doctor.Appointments.Count != 0)
@@ -60,10 +64,19 @@
                     {
                         <tr>
                             <td>
-                                <a asp-controller="Doctors" asp-action="Details" asp-route-id="@doctor.DoctorId">
-                                    @Html.DisplayFor(modelItem => doctor.Person.FirstName)
-                                    @Html.DisplayFor(modelItem => doctor.Person.LastName)
-                                </a>
+                                @if (CurrentUser.UserType == 2)
+                                {
+                                    <a asp-controller="Doctors" asp-action="Details" asp-route-id="@doctor.DoctorId">
+                                        @Html.DisplayFor(modelItem => doctor.Person.FirstName)
+                                        @Html.DisplayFor(modelItem => doctor.Person.LastName)
+                                    </a>
+                                }
+                                else
+                                {
+                            <span>
+                                @Html.DisplayFor(modelItem => doctor.Person.FirstName) @Html.DisplayFor(modelItem => doctor.Person.LastName)
+                            </span>
+                                }
                             </td>
                             @*<td>
                                     @Html.DisplayFor(modelItem => doctor.Person.FirstName)
@@ -112,10 +125,19 @@
             {
                 <tr>
                     <td>
-                        <a asp-controller="Doctors" asp-action="Details" asp-route-id="@doctor.DoctorId">
-                            @Html.DisplayFor(modelItem => doctor.Person.FirstName)
-                            @Html.DisplayFor(modelItem => doctor.Person.LastName)
-                        </a>
+                        @if (CurrentUser.UserType == 2)
+                        {
+                            <a asp-controller="Doctors" asp-action="Details" asp-route-id="@doctor.DoctorId">
+                                @Html.DisplayFor(modelItem => doctor.Person.FirstName)
+                                @Html.DisplayFor(modelItem => doctor.Person.LastName)
+                            </a>
+                        }
+                        else
+                        {
+                            <span>
+                            @Html.DisplayFor(modelItem => doctor.Person.FirstName) @Html.DisplayFor(modelItem => doctor.Person.LastName)
+                            </span>
+                        }
                     </td>
                     @*<td>
                             @Html.DisplayFor(modelItem => doctor.Person.FirstName)
