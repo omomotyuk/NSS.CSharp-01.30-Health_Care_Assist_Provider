@@ -43,6 +43,15 @@
             @*<th></th>*@
         </tr>
     </thead>
+
+    @using Microsoft.AspNetCore.Identity
+    @inject SignInManager<ApplicationUser> SignInManager
+    @inject UserManager<ApplicationUser> UserManager
+
+    @{
+        var CurrentUser = await UserManager.GetUserAsync(User);
+    }
+
     <tbody>
         @foreach (var sponsor in Model)
         {
@@ -52,25 +61,30 @@
                 {
                     <tr>
                         <td>
-                            <a asp-controller="Sponsors" asp-action="Details" asp-route-id="@sponsor.SponsorId">
-                                @Html.DisplayFor(modelItem => sponsor.Person.FirstName)
-                                @Html.DisplayFor(modelItem => sponsor.Person.LastName)
-                            </a>
+                            @if (CurrentUser.UserType == 3)
+                            {
+                                <a asp-controller="Sponsors" asp-action="Details" asp-route-id="@sponsor.SponsorId">
+                                    @Html.DisplayFor(modelItem => sponsor.Person.FirstName)
+                                    @Html.DisplayFor(modelItem => sponsor.Person.LastName)
+                                </a>
+                            }
+                            else
+                            {
+                                <span>@Html.DisplayFor(modelItem => sponsor.Person.FirstName) @Html.DisplayFor(modelItem => sponsor.Person.LastName)</span>
+                            }
                         </td>
-                        @if (sponsor.Person.UserType == 3)
-                        {
-                            <td>
+                        <td>
+                            @if (CurrentUser.UserType == 3 && CurrentUser.Id == sponsor.Person.Id)
+                            {
                                 <a asp-controller="Sponsors" asp-action="Edit" asp-route-id="@sponsor.SponsorId">
                                     @Html.DisplayFor(modelItem => sponsor.CurrentDonation)
                                 </a>
-                            </td>
-                        }
-                        else
-                        {
-                            <td>
+                            }
+                            else
+                            {
                                 @Html.DisplayFor(modelItem => sponsor.CurrentDonation)
-                            </td>
-                        }
+                            }
+                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => sponsor.TotalDonation)
                         </td>
@@ -90,10 +104,10 @@
                             @Html.DisplayFor(modelItem => assist.Active)
                         </td>
                         @*<td>
-                            <a asp-action="Edit" asp-route-id="@sponsor.SponsorId">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@sponsor.SponsorId">Details</a> |
-                                <a asp-action="Delete" asp-route-id="@sponsor.SponsorId">Delete</a>
-                        </td>*@
+                                <a asp-action="Edit" asp-route-id="@sponsor.SponsorId">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@sponsor.SponsorId">Details</a> |
+                                    <a asp-action="Delete" asp-route-id="@sponsor.SponsorId">Delete</a>
+                            </td>*@
                     </tr>
                 }
             }
@@ -101,25 +115,30 @@
             {
                 <tr>
                     <td>
-                        <a asp-controller="Sponsors" asp-action="Details" asp-route-id="@sponsor.SponsorId">
-                            @Html.DisplayFor(modelItem => sponsor.Person.FirstName)
-                            @Html.DisplayFor(modelItem => sponsor.Person.LastName)
-                        </a>
+                        @if (CurrentUser.UserType == 3)
+                        {
+                            <a asp-controller="Sponsors" asp-action="Details" asp-route-id="@sponsor.SponsorId">
+                                @Html.DisplayFor(modelItem => sponsor.Person.FirstName)
+                                @Html.DisplayFor(modelItem => sponsor.Person.LastName)
+                            </a>
+                        }
+                        else
+                        {
+                            <span>@Html.DisplayFor(modelItem => sponsor.Person.FirstName) @Html.DisplayFor(modelItem => sponsor.Person.LastName)</span>
+                        }
                     </td>
-                    @if (sponsor.Person.UserType == 3)
-                    {
-                        <td>
+                    <td>
+                        @if (CurrentUser.UserType == 2 && CurrentUser.Id == sponsor.Person.Id)
+                        {
                             <a asp-controller="Sponsors" asp-action="Edit" asp-route-id="@sponsor.SponsorId">
                                 @Html.DisplayFor(modelItem => sponsor.CurrentDonation)
                             </a>
-                        </td>
-                    }
-                    else
-                    {
-                        <td>
+                        }
+                        else
+                        {
                             @Html.DisplayFor(modelItem => sponsor.CurrentDonation)
-                        </td>
-                    }
+                        }
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => sponsor.TotalDonation)
                     </td>
@@ -131,10 +150,10 @@
                     <td></td>
                     <td></td>
                     @*<td>
-                        <a asp-action="Edit" asp-route-id="@sponsor.SponsorId">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@sponsor.SponsorId">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@sponsor.SponsorId">Delete</a>
-                    </td>*@
+                            <a asp-action="Edit" asp-route-id="@sponsor.SponsorId">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@sponsor.SponsorId">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@sponsor.SponsorId">Delete</a>
+                        </td>*@
                 </tr>
             }
         }
