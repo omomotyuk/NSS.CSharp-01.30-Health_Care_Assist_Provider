@@ -88,7 +88,6 @@ namespace Health_Care_Assist_Provider.Controllers
                 return NotFound();
             }
 
-            //var doctor = await _context.Doctor.FindAsync(id);
             var doctor = await _context.Doctor
                                         .Include(p => p.Person)
                                         .FirstOrDefaultAsync(m => m.DoctorId == id);
