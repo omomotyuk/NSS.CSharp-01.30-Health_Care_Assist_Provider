@@ -82,16 +82,17 @@ namespace Health_Care_Assist_Provider.Controllers
 
             switch (person.UserType)
             {
-                case 1:
+                case 1: // User of Type of Patient is log in
                     {
+                        // loading of current Patient's active Diagnoses data
                         var patientDiagnoses = _context.Diagnosis
                             .Where(d => d.PatientId == patient.PatientId && d.Active == true);
                         var selectedDiagnoses = await patientDiagnoses.ToListAsync();
-                        if (selectedDiagnoses.Count != 0)
+                        if (selectedDiagnoses.Count != 0) // there is(are) the Diagnose(s)
                         {
                             ViewData["DiagnosisId"] = new SelectList(selectedDiagnoses, "DiagnosisId", "Specialty");
                         }
-                        else
+                        else // there is no active Diagnose
                         {
                             TempData["ErrorMessage"] = $"Sorry {patient.Person.FirstName}, you can't add new assist at this moment. There is no your diagnosis.";
                             return RedirectToAction("Index");
@@ -102,6 +103,7 @@ namespace Health_Care_Assist_Provider.Controllers
                         string specialty = selectedDiagnoses[0].Specialty;
                         specialtyList.Add(specialty);
 
+                        // loading of the appropriate specialty Doctor's active Appointments data
                         var doctorAppointments = _context.Appointment
                             .Include(d => d.Doctor)
                             .Where(a => a.Doctor.Specialty == specialty && a.DateAndTime > DateTime.Now && a.Available == true);
@@ -124,11 +126,11 @@ namespace Health_Care_Assist_Provider.Controllers
                             }
                         }
 
-                        if (selectedAppointments.Count != 0)
+                        if (selectedAppointments.Count != 0) // there is(are) available Appointment(s)
                         {
                             ViewData["AppointmentId"] = new SelectList(selectedAppointments, "AppointmentId", "Doctor.Specialty");
                         }
-                        else
+                        else // there is no available Appointment
                         {
                             TempData["ErrorMessage"] = $"Sorry {patient.Person.FirstName}, you can't add new assist at this moment. There is no available appointment.";
                             return RedirectToAction("Index");
@@ -150,7 +152,7 @@ namespace Health_Care_Assist_Provider.Controllers
                         }
                     }
                     break;
-                case 2:
+                case 2: // User of Type of Doctor is log in
                     {
                         var patientDiagnoses = _context.Diagnosis
                             .Where(d => d.Specialty == doctor.Specialty && d.Active == true);
@@ -184,7 +186,7 @@ namespace Health_Care_Assist_Provider.Controllers
                         //ViewData["SponsorId"] = new SelectList(await sponsorFunds.ToListAsync(), "SponsorId", "CurrentDonation");
                     }
                     break;
-                case 3:
+                case 3: // User of Type of Sponsor is log in
                     {
                         var patientDiagnoses = _context.Diagnosis
                             .Where(d => d.Active == true);
