@@ -87,7 +87,9 @@ namespace Health_Care_Assist_Provider.Controllers
                         // loading of current Patient's active Diagnoses data
                         var patientDiagnoses = _context.Diagnosis
                             .Where(d => d.PatientId == patient.PatientId && d.Active == true);
+
                         var selectedDiagnoses = await patientDiagnoses.ToListAsync();
+
                         if (selectedDiagnoses.Count != 0) // there is(are) the Diagnose(s)
                         {
                             ViewData["DiagnosisId"] = new SelectList(selectedDiagnoses, "DiagnosisId", "Specialty");
@@ -156,7 +158,9 @@ namespace Health_Care_Assist_Provider.Controllers
                     {
                         var patientDiagnoses = _context.Diagnosis
                             .Where(d => d.Specialty == doctor.Specialty && d.Active == true);
+
                         var selectedDiagnoses = await patientDiagnoses.ToListAsync();
+
                         if (selectedDiagnoses.Count != 0)
                         {
                             ViewData["DiagnosisId"] = new SelectList(selectedDiagnoses, "DiagnosisId", "Specialty");
@@ -170,7 +174,9 @@ namespace Health_Care_Assist_Provider.Controllers
                         var doctorAppointments = _context.Appointment
                             .Include(d => d.Doctor)
                             .Where(a => a.DoctorId == doctor.DoctorId && a.DateAndTime > DateTime.Now && a.Available == true);
+
                         var selectedAppointments = await doctorAppointments.ToListAsync();
+
                         if (selectedAppointments.Count != 0)
                         {
                             ViewData["AppointmentId"] = new SelectList(selectedAppointments, "AppointmentId", "Doctor.Specialty");
@@ -180,17 +186,15 @@ namespace Health_Care_Assist_Provider.Controllers
                             TempData["ErrorMessage"] = $"Sorry {doctor.Person.FirstName}, you can't add new assist at this moment. There is no available appointment.";
                             return RedirectToAction("Index");
                         }
-
-                        //var sponsorFunds = _context.Sponsor
-                        //    .Where(s => s.CurrentDonation > 0);
-                        //ViewData["SponsorId"] = new SelectList(await sponsorFunds.ToListAsync(), "SponsorId", "CurrentDonation");
                     }
                     break;
                 case 3: // User of Type of Sponsor is log in
                     {
                         var patientDiagnoses = _context.Diagnosis
                             .Where(d => d.Active == true);
+
                         var selectedDiagnoses = await patientDiagnoses.ToListAsync();
+
                         if (selectedDiagnoses.Count != 0)
                         {
                             ViewData["DiagnosisId"] = new SelectList(selectedDiagnoses, "DiagnosisId", "Specialty");
@@ -243,6 +247,7 @@ namespace Health_Care_Assist_Provider.Controllers
                             .Where(s => s.SponsorId == sponsor.SponsorId && s.CurrentDonation > 0);
 
                         var selectedSponsors = await sponsorFunds.ToListAsync();
+
                         if (selectedSponsors.Count != 0)
                         {
                             ViewData["SponsorId"] = new SelectList(selectedSponsors, "SponsorId", "CurrentDonation");
@@ -276,20 +281,24 @@ namespace Health_Care_Assist_Provider.Controllers
             {
                 // Diagnosis updates
                 var diagnosis = await _context.Diagnosis.FirstOrDefaultAsync(d => d.DiagnosisId == assist.DiagnosisId);
+
                 if (diagnosis == null)
                 {
                     return NotFound();
                 }
+
                 diagnosis.Active = false;
                 _context.Diagnosis.Update(diagnosis);
                 await _context.SaveChangesAsync();
 
                 // Appointment updates
                 var appointment = await _context.Appointment.FirstOrDefaultAsync(a => a.AppointmentId == assist.AppointmentId);
+                
                 if (appointment == null)
                 {
                     return NotFound();
                 }
+                
                 appointment.Available = false;
                 _context.Appointment.Update(appointment);
                 await _context.SaveChangesAsync();
@@ -312,9 +321,11 @@ namespace Health_Care_Assist_Provider.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["AppointmentId"] = new SelectList(_context.Appointment, "AppointmentId", "AppointmentId", assist.AppointmentId);
             ViewData["DiagnosisId"] = new SelectList(_context.Diagnosis, "DiagnosisId", "Specialty", assist.DiagnosisId);
             ViewData["SponsorId"] = new SelectList(_context.Sponsor, "SponsorId", "SponsorId", assist.SponsorId);
+            
             return View(assist);
         }
 
@@ -408,6 +419,7 @@ namespace Health_Care_Assist_Provider.Controllers
                         .AverageAsync(a => a.Rating);
 
                     var doctor = await _context.Doctor.FirstOrDefaultAsync(s => s.DoctorId == doctorId);
+                    
                     if (doctor == null)
                     {
                         return NotFound();
@@ -415,9 +427,8 @@ namespace Health_Care_Assist_Provider.Controllers
                     doctor.Rating = doctorRating;
 
                     _context.Doctor.Update(doctor);
+                    
                     await _context.SaveChangesAsync();
-                    //
-
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -436,6 +447,7 @@ namespace Health_Care_Assist_Provider.Controllers
             ViewData["AppointmentId"] = new SelectList(_context.Appointment, "AppointmentId", "AppointmentId", assist.AppointmentId);
             ViewData["DiagnosisId"] = new SelectList(_context.Diagnosis, "DiagnosisId", "Specialty", assist.DiagnosisId);
             ViewData["SponsorId"] = new SelectList(_context.Sponsor, "SponsorId", "SponsorId", assist.SponsorId);
+            
             return View(assist);
         }
 

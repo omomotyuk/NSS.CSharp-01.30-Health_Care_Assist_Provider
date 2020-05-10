@@ -63,6 +63,7 @@ namespace Health_Care_Assist_Provider.Controllers
             var patient = await _context.Patient
                 .Include(p => p.Person)
                 .FirstOrDefaultAsync(m => m.PatientId == id);
+
             if (patient == null)
             {
                 return NotFound();
@@ -95,6 +96,7 @@ namespace Health_Care_Assist_Provider.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["PersonId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", patient.PersonId);
             return View(patient);
         }
@@ -161,6 +163,7 @@ namespace Health_Care_Assist_Provider.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["PersonId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", patient.PersonId);
             return View(patient);
         }
@@ -199,8 +202,11 @@ namespace Health_Care_Assist_Provider.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var patient = await _context.Patient.FindAsync(id);
+
             _context.Patient.Remove(patient);
+
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
